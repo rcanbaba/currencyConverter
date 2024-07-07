@@ -49,7 +49,46 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         return label
     }()
     
-    private var searchBar = UISearchBar()
+    private lazy var searchBaseView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 8
+        view.backgroundColor = .white
+        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderWidth = 1
+        return view
+    }()
+    
+    private lazy var searchLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = UIColor.Custom.Picker.titleTextColor
+        label.textAlignment = .left
+        label.backgroundColor = .white
+        label.text = " Search "
+        return label
+    }()
+    
+    private lazy var searchImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "search-icon")
+        return imageView
+    }()
+    
+    private var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        
+        // Access the UITextField inside UISearchBar
+        if let searchTextField = searchBar.value(forKey: "searchField") as? UITextField {
+            // Add padding to the left of the text field
+            let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+            searchTextField.leftView = paddingView
+            searchTextField.leftViewMode = .always
+            searchTextField.backgroundColor = UIColor.white
+        }
+        
+        return searchBar
+    }()
     
     init(viewModel: CurrencySelectionViewModelProtocol) {
         self.viewModel = viewModel
@@ -74,7 +113,11 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         searchBar.placeholder = "Search"
         
         view.addSubview(titleLabel)
-        view.addSubview(searchBar)
+        
+        view.addSubview(searchBaseView)
+        searchBaseView.addSubview(searchBar)
+        searchBar.addSubview(searchImageView)
+        view.addSubview(searchLabel)
         view.addSubview(tableViewTitleLabel)
         view.addSubview(tableView)
         
@@ -83,10 +126,25 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
             make.leading.trailing.equalToSuperview().inset(16)
         }
         
-        searchBar.snp.makeConstraints { make in
-            make.height.equalTo(32)
+        searchBaseView.snp.makeConstraints { make in
+            make.height.equalTo(48)
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        searchBar.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        searchLabel.snp.makeConstraints { make in
+            make.leading.equalTo(searchBaseView.snp.leading).offset(12)
+            make.centerY.equalTo(searchBaseView.snp.top)
+        }
+        
+        searchImageView.snp.makeConstraints { make in
+            make.size.equalTo(24)
+            make.leading.equalToSuperview().inset(12)
+            make.centerY.equalToSuperview()
         }
         
         tableViewTitleLabel.snp.makeConstraints { make in
