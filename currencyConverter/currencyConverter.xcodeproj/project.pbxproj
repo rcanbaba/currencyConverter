@@ -133,8 +133,8 @@
 		B4D2C23B2C3A6B7400266958 /* currencyConverter */ = {
 			isa = PBXGroup;
 			children = (
+				B4D2C2752C3A75DC00266958 /* CurrencyConverter */,
 				B4FFE9D82C3ACFC000511534 /* CurrencySelection */,
-				B4D2C2752C3A75DC00266958 /* Converter */,
 				B4D2C26C2C3A6E6200266958 /* App */,
 				B4D2C26D2C3A6EC400266958 /* Model.swift */,
 				B4D2C26F2C3A6F0200266958 /* CurrencyService.swift */,
@@ -176,7 +176,7 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		B4D2C2752C3A75DC00266958 /* Converter */ = {
+		B4D2C2752C3A75DC00266958 /* CurrencyConverter */ = {
 			isa = PBXGroup;
 			children = (
 				B4D2C2782C3A761E00266958 /* ViewComponents */,
@@ -184,7 +184,7 @@
 				B4D2C2402C3A6B7400266958 /* ConverterViewController.swift */,
 				B4D2C2762C3A761700266958 /* ConverterView.swift */,
 			);
-			path = Converter;
+			path = CurrencyConverter;
 			sourceTree = "<group>";
 		};
 		B4D2C2782C3A761E00266958 /* ViewComponents */ = {

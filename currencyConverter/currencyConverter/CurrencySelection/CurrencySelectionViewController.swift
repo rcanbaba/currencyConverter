@@ -19,8 +19,7 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-//        tableView.register(CountryFilterTableViewCell.self, forCellReuseIdentifier: CountryFilterTableViewCell.reuseIdentifier)
-//        tableView.register(CountryFilterTableViewHeaderCell.self, forCellReuseIdentifier: CountryFilterTableViewHeaderCell.reuseIdentifier)
+        tableView.register(CurrencyTableViewCell.self, forCellReuseIdentifier: "CurrencyCell")
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 72
@@ -38,7 +37,6 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         label.font = UIFont.systemFont(ofSize: 24, weight: .medium)
         label.textColor = UIColor.Custom.Picker.titleTextColor
         label.textAlignment = .center
-        label.text = "Sending to"
         return label
     }()
     
@@ -69,16 +67,11 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
     }
     
     private func setupUI() {
-        title = "Sending to"
+        titleLabel.text = viewModel.titleText
         view.backgroundColor = UIColor.Custom.Picker.backgroundColor
         
         searchBar.delegate = self
         searchBar.placeholder = "Search"
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(CurrencyTableViewCell.self, forCellReuseIdentifier: "CurrencyCell")
-        
         
         view.addSubview(titleLabel)
         view.addSubview(searchBar)
@@ -136,7 +129,7 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCountry = viewModel.filteredCountries[indexPath.row]
         self.dismiss(animated: true)
-        delegate?.currencySelected(currency: .GBP, isSender: true)
+        delegate?.currencySelected(currency: Currency(rawValue: selectedCountry.code)!, isSender: viewModel.isSender)
     }
 }
 

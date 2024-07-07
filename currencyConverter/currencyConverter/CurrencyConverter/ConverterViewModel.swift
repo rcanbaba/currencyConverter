@@ -13,6 +13,10 @@ protocol CurrencyViewModelProtocol {
     var onError2: ((String) -> Void)? { get set }
     var onReceiverAmountError: ((String) -> Void)? { get set }
     
+    var showSenderCurrencySelectionFor: (([Currency]) -> Void)? { get set }
+    
+    var showReceiverCurrencySelectionFor: (([Currency]) -> Void)? { get set }
+    
     var onFetchRequest: (() -> Void)? { get set }
     
     var updateReceiverAmount: ((String) -> Void)? { get set }
@@ -27,10 +31,13 @@ protocol CurrencyViewModelProtocol {
     func setToCurrency(_ currency: Currency)
     func senderAmountUpdated(_ text: String?)
     func receiverAmountUpdated(_ text: String?)
+    func changeSenderCurrencyTapped()
+    func changeReceiverCurrencyTapped()
 }
 
 
 class CurrencyViewModel: CurrencyViewModelProtocol {
+    
     private let currencyService: CurrencyServiceProtocol
     
     var onRatesFetched: ((CurrencyRate) -> Void)?
@@ -43,6 +50,9 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     var updateReceiverAmount: ((String) -> Void)?
     var updateSenderAmount: ((String) -> Void)?
     var updateRateText: ((String) -> Void)?
+    
+    var showSenderCurrencySelectionFor: (([Currency]) -> Void)?
+    var showReceiverCurrencySelectionFor: (([Currency]) -> Void)?
     
     private var senderCurrency: Currency = .PLN
     private var receiverCurrency: Currency = .UAH
@@ -160,6 +170,21 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         }
         fetchRates(fromCurrency: receiverCurrency, toCurrency: senderCurrency, amount: amount, isSender: false)
     }
+    
+    func changeSenderCurrencyTapped() {
+        let currencyList = getSelectableCurrencies(hiddenCurrency: receiverCurrency)
+        showSenderCurrencySelectionFor?(currencyList)
+    }
+    
+    func changeReceiverCurrencyTapped() {
+        let currencyList = getSelectableCurrencies(hiddenCurrency: senderCurrency)
+        showReceiverCurrencySelectionFor?(currencyList)
+    }
+    
+    func getSelectableCurrencies(hiddenCurrency: Currency) -> [Currency] {
+        return Currency.allCases.filter { $0 != hiddenCurrency }
+    }
+
 }
 
 extension String {

@@ -32,9 +32,9 @@ class AppCoordinator: Coordinator {
 }
 
 extension AppCoordinator: ConverterViewControllerDelegate {
-    func currencySelectTapped(currentCurrency: Currency, isSender: Bool) {
+    func currencySelectTapped(currencyList: [Currency], isSender: Bool) {
         Logger.info("Coordinator: presentCurrencySelection")
-        let viewModel = CurrencySelectionViewModel(currencies: [.EUR, .GBP, .PLN, .UAH])
+        let viewModel = CurrencySelectionViewModel(currencies: currencyList, isSender: isSender)
         let viewController = CurrencySelectionViewController(viewModel: viewModel)
         viewController.modalPresentationStyle = .formSheet
         viewController.delegate = self
@@ -47,7 +47,7 @@ extension AppCoordinator: CurrencySelectionViewControllerDelegate {
     func currencySelected(currency: Currency, isSender: Bool) {
         Logger.info("Coordinator: currencySelected")
         guard let baseController = baseController as? ConverterViewController else { return }
-        baseController.newCurrencySelected(currency: .GBP, fromSender: true)
+        baseController.newCurrencySelected(currency: currency, fromSender: isSender)
         
     }
     

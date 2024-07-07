@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ConverterViewControllerDelegate: AnyObject {
-    func currencySelectTapped(currentCurrency: Currency, isSender: Bool)
+    func currencySelectTapped(currencyList: [Currency], isSender: Bool)
 }
 
 class ConverterViewController: UIViewController {
@@ -131,9 +131,33 @@ class ConverterViewController: UIViewController {
                 self?.currencyConvertView.setSender(text: amountText)
             }
         }
+        
+        viewModel.showSenderCurrencySelectionFor = { [weak self] list in
+            DispatchQueue.main.async {
+                self?.delegate?.currencySelectTapped(currencyList: list, isSender: true)
+            }
+        }
+        
+        
+        viewModel.showReceiverCurrencySelectionFor = { [weak self] list in
+            DispatchQueue.main.async {
+                self?.delegate?.currencySelectTapped(currencyList: list, isSender: false)
+            }
+        }
     }
 
     public func newCurrencySelected(currency: Currency, fromSender: Bool) {
+        DispatchQueue.main.async {
+            //TODO: forward it to ViewModel -> work true logic
+            if fromSender {
+                self.currencyConvertView.setSender(currencyCode: currency.rawValue)
+                self.currencyConvertView.setSender(flagImage: UIImage(named: currency.currencyFlagImageName))
+            } else {
+                self.currencyConvertView.setReceiver(currencyCode: currency.rawValue)
+                self.currencyConvertView.setReceiver(flagImage: UIImage(named: currency.currencyFlagImageName))
+            }
+        }
+        
         Logger.info("in Coverter VC newCurrencySelected")
     }
 
@@ -151,15 +175,15 @@ extension ConverterViewController: CurrencyConvertViewDelegate {
     }
     
     func senderCurrencySelectionTapped() {
-        //TODO: forward them to viewmodel check sender or receiver whatever pass
         Logger.info("SENDER CHANGE TAPPED")
-        delegate?.currencySelectTapped(currentCurrency: .PLN, isSender: true)
+        viewModel.changeSenderCurrencyTapped()
     }
     
     func receiverCurrencySelectionTapped() {
         //TODO: forward them to viewmodel check sender or receiver whatever pass
         Logger.info("RECEIVER CHANGE TAPPED")
-        delegate?.currencySelectTapped(currentCurrency: .UAH, isSender: false)
+        viewModel.changeReceiverCurrencyTapped()
+        
     }
     
     func swapButtonTapped() {
