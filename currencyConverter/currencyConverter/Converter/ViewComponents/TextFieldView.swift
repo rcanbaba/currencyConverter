@@ -21,7 +21,7 @@ class TextFieldView: UIView {
         textField.borderStyle = .none
         textField.keyboardType = .decimalPad
         textField.font = UIFont.systemFont(ofSize: 32)
-        textField.placeholder = "                                                                    "
+        textField.placeholder = "enter amount              "
         textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         textField.setContentHuggingPriority(.defaultLow, for: .horizontal)
         textField.backgroundColor = .clear
@@ -112,7 +112,6 @@ class TextFieldView: UIView {
 
 // MARK: Actions
 extension TextFieldView {
-    
     @objc private func textfieldValueChanged(_ textField: UITextField) {
         delegate?.textfieldValueChanged(textField)
     }

@@ -25,5 +25,12 @@ enum Currency: String, CaseIterable {
         .GBP: 1000,
         .UAH: 50000
     ]
+    
+    static let limitsString: [Currency: String] = [
+        .PLN: "20 000",
+        .EUR: "5 000",
+        .GBP: "1 000",
+        .UAH: "50 000"
+    ]
 }
 
