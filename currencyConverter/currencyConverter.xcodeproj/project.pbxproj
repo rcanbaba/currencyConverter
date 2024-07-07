@@ -108,6 +108,7 @@
 				B4D2C26D2C3A6EC400266958 /* Model.swift */,
 				B4D2C26F2C3A6F0200266958 /* CurrencyService.swift */,
 				B4D2C2712C3A70E800266958 /* ConverterViewModel.swift */,
+				B4D2C24A2C3A6B7600266958 /* Info.plist */,
 				B4D2C2452C3A6B7600266958 /* Assets.xcassets */,
 			);
 			path = currencyConverter;
@@ -136,7 +137,6 @@
 				B4D2C2472C3A6B7600266958 /* LaunchScreen.storyboard */,
 				B4D2C23C2C3A6B7400266958 /* AppDelegate.swift */,
 				B4D2C23E2C3A6B7400266958 /* SceneDelegate.swift */,
-				B4D2C24A2C3A6B7600266958 /* Info.plist */,
 			);
 			path = App;
 			sourceTree = "<group>";
