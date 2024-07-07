@@ -112,7 +112,6 @@ class TextFieldView: UIView {
 
 // MARK: Actions
 extension TextFieldView {
-    
     @objc private func textfieldValueChanged(_ textField: UITextField) {
         delegate?.textfieldValueChanged(textField)
     }

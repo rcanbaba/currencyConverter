@@ -11,6 +11,9 @@ protocol CurrencyViewModelProtocol {
     var onRatesFetched: ((CurrencyRate) -> Void)? { get set }
     var onError: ((Error) -> Void)? { get set }
     var onError2: ((String) -> Void)? { get set }
+    var onReceiverAmountError: ((String) -> Void)? { get set }
+    
+    var onFetchRequest: (() -> Void)? { get set }
     
     var updateReceiverAmount: ((String) -> Void)? { get set }
     var updateSenderAmount: ((String) -> Void)? { get set }
@@ -33,6 +36,10 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     var onRatesFetched: ((CurrencyRate) -> Void)?
     var onError: ((Error) -> Void)?
     var onError2: ((String) -> Void)?
+    var onReceiverAmountError: ((String) -> Void)?
+    
+    var onFetchRequest: (() -> Void)?
+    
     var updateReceiverAmount: ((String) -> Void)?
     var updateSenderAmount: ((String) -> Void)?
     var updateRateText: ((String) -> Void)?
@@ -49,15 +56,12 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     
     func fetchRates(fromCurrency: Currency, toCurrency: Currency, amount: Double, isSender: Bool) {
         
+        onFetchRequest?()
+        
         Logger.info("from: \(fromCurrency.rawValue) - to: \(toCurrency.rawValue) - amount: \(amount) - isSender: \(isSender)")
         
         Logger.info("sender: \(senderCurrency.rawValue) - to: \(receiverCurrency.rawValue) - SenderAmount: \(senderAmount) - ReceiverAmount: \(receiverAmount)")
-        
-        // TODO: just check the sender
-//        guard validateAmount(amount, for: fromCurrency) else {
-//            onError2?("Amount exceeds limit for \(fromCurrency.rawValue)")
-//            return
-//        }
+
         Logger.info("Request sended on vm")
         currencyService.fetchRates(from: fromCurrency.rawValue, to: toCurrency.rawValue, amount: amount) { [weak self] result in
             guard let self = self else { return }
@@ -71,6 +75,10 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
                 if isSender {
                     self.updateReceiverAmount?(formattedAmount)
                 } else {
+                    guard validateAmount(convertedAmount, for: senderCurrency) else {
+                        sendSenderValidationError(for: senderCurrency)
+                        return
+                    }
                     self.updateSenderAmount?(formattedAmount)
                 }
                 
@@ -110,6 +118,11 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         return amount <= limit
     }
     
+    func sendSenderValidationError(for currency: Currency) {
+        let errorPreText = "Maximum sending amount: "
+        onReceiverAmountError?(errorPreText + Currency.limitsString[currency]! + " " + currency.rawValue)
+    }
+    
     func setFromCurrency(_ currency: Currency) {
         senderCurrency = currency
     }
@@ -127,6 +140,13 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
             self.updateReceiverAmount?("")
             return
         }
+        
+        guard validateAmount(amount, for: senderCurrency) else {
+            currencyService.cancelFetchRates()
+            sendSenderValidationError(for: senderCurrency)
+            return
+        }
+        
         fetchRates(fromCurrency: senderCurrency, toCurrency: receiverCurrency, amount: amount, isSender: true)
     }
     

@@ -94,15 +94,15 @@ class CurrencyConvertView: UIView, UITextFieldDelegate{
         let currentText = textField.text ?? ""
         
         // Check if the input is a comma
-        if string == "," {
+        if string == "," || string == "." {
             // Allow only one comma
-            if currentText.contains(",") {
+            if currentText.contains(",") || currentText.contains("."){
                 return false
             }
         }
         
         // Check if the input is valid
-        let allowedCharacters = CharacterSet(charactersIn: "0123456789,")
+        let allowedCharacters = CharacterSet(charactersIn: "0123456789,.")
         let characterSet = CharacterSet(charactersIn: string)
         return allowedCharacters.isSuperset(of: characterSet)
     }

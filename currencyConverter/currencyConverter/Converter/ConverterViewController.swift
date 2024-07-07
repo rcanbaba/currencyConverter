@@ -74,7 +74,7 @@ class ConverterViewController: UIViewController {
         
         currencyConvertView.setRate(text: "1 PLN = 7.2323 UAH")
         
-        errorView.set(errorText: "Maximum sending amount: 20 000 UAH")
+        errorView.isHidden = true
         
     }
     
@@ -94,6 +94,21 @@ class ConverterViewController: UIViewController {
             Logger.warning("VM onError2")
             DispatchQueue.main.async {
                 self?.errorView.set(errorText: errorMessage)
+            }
+        }
+        
+        viewModel.onReceiverAmountError = { [weak self] errorText in
+            Logger.warning("Validaton Error errorText")
+            DispatchQueue.main.async {
+                self?.errorView.isHidden = false
+                self?.errorView.set(errorText: errorText)
+            }
+        }
+        
+        viewModel.onFetchRequest = { [weak self] in
+            Logger.warning("VM fetch request start")
+            DispatchQueue.main.async {
+                self?.errorView.isHidden = true
             }
         }
         
