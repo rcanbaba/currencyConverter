@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol ConverterViewControllerDelegate: AnyObject {
+    func currencySelectTapped(currentCurrency: Currency, isSender: Bool)
+}
+
 class ConverterViewController: UIViewController {
+    
+    weak var delegate: ConverterViewControllerDelegate?
     
     private var viewModel: CurrencyViewModelProtocol
     
@@ -142,11 +148,15 @@ extension ConverterViewController: CurrencyConvertViewDelegate {
     }
     
     func senderCurrencySelectionTapped() {
+        //TODO: forward them to viewmodel check sender or receiver whatever pass
         Logger.info("SENDER CHANGE TAPPED")
+        delegate?.currencySelectTapped(currentCurrency: .PLN, isSender: true)
     }
     
     func receiverCurrencySelectionTapped() {
+        //TODO: forward them to viewmodel check sender or receiver whatever pass
         Logger.info("RECEIVER CHANGE TAPPED")
+        delegate?.currencySelectTapped(currentCurrency: .UAH, isSender: false)
     }
     
     func swapButtonTapped() {
