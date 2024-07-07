@@ -133,6 +133,9 @@ class ConverterViewController: UIViewController {
         }
     }
 
+    public func newCurrencySelected(currency: Currency, fromSender: Bool) {
+        Logger.info("in Coverter VC newCurrencySelected")
+    }
 
 }
 

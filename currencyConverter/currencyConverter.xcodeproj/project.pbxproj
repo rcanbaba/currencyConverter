@@ -32,6 +32,7 @@
 		B4FFE9D72C3A7D5D00511534 /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9D62C3A7D5D00511534 /* DependencyInjector.swift */; };
 		B4FFE9DA2C3AD12A00511534 /* CurrencySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9D92C3AD12A00511534 /* CurrencySelectionViewController.swift */; };
 		B4FFE9DC2C3AD1D900511534 /* CurrencySelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9DB2C3AD1D900511534 /* CurrencySelectionViewModel.swift */; };
+		B4FFE9DE2C3AF07F00511534 /* CurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9DD2C3AF07F00511534 /* CurrencyTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		B4FFE9D62C3A7D5D00511534 /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
 		B4FFE9D92C3AD12A00511534 /* CurrencySelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionViewController.swift; sourceTree = "<group>"; };
 		B4FFE9DB2C3AD1D900511534 /* CurrencySelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionViewModel.swift; sourceTree = "<group>"; };
+		B4FFE9DD2C3AF07F00511534 /* CurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +204,7 @@
 			children = (
 				B4FFE9D92C3AD12A00511534 /* CurrencySelectionViewController.swift */,
 				B4FFE9DB2C3AD1D900511534 /* CurrencySelectionViewModel.swift */,
+				B4FFE9DD2C3AF07F00511534 /* CurrencyTableViewCell.swift */,
 			);
 			path = CurrencySelection;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 				B4FFE9DC2C3AD1D900511534 /* CurrencySelectionViewModel.swift in Sources */,
 				B4FFE9D52C3A7B7800511534 /* AppCoordinator.swift in Sources */,
 				B4D2C2722C3A70E800266958 /* ConverterViewModel.swift in Sources */,
+				B4FFE9DE2C3AF07F00511534 /* CurrencyTableViewCell.swift in Sources */,
 				B4D2C2812C3A782000266958 /* RateView.swift in Sources */,
 				B4D2C2412C3A6B7400266958 /* ConverterViewController.swift in Sources */,
 				B4FFE9D12C3A792D00511534 /* BottomErrorView.swift in Sources */,

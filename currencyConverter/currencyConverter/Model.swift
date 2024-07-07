@@ -80,7 +80,7 @@ enum Currency: String, CaseIterable {
         case .EUR:
             return "eur-flag-icon"
         case .GBP:
-            return "gbp-flag-icon Britain"
+            return "gbp-flag-icon"
         case .PLN:
             return "pln-flag-icon"
         }

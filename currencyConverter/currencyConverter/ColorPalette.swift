@@ -43,5 +43,12 @@ extension UIColor {
                 static let blackText = UIColor("000000")
             }
         }
+        
+        struct Picker {
+            static let backgroundColor = UIColor("FFFFFF")
+            static let titleTextColor = UIColor("000000")
+            static let itemDetailTextColor = UIColor("6C727A")
+            static let itemFlagBackgroundColor = UIColor("EDF0F4")
+        }
     }
 }

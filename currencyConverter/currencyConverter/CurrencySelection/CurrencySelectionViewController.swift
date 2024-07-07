@@ -16,7 +16,41 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
     weak var delegate: CurrencySelectionViewControllerDelegate?
     
     private var viewModel: CurrencySelectionViewModelProtocol
-    private var tableView = UITableView()
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+//        tableView.register(CountryFilterTableViewCell.self, forCellReuseIdentifier: CountryFilterTableViewCell.reuseIdentifier)
+//        tableView.register(CountryFilterTableViewHeaderCell.self, forCellReuseIdentifier: CountryFilterTableViewHeaderCell.reuseIdentifier)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = 72
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset = .zero
+
+        return tableView
+    }()
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 24, weight: .medium)
+        label.textColor = UIColor.Custom.Picker.titleTextColor
+        label.textAlignment = .center
+        label.text = "Sending to"
+        return label
+    }()
+    
+    private lazy var tableViewTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.textColor = UIColor.Custom.Picker.titleTextColor
+        label.textAlignment = .left
+        label.text = "All countries"
+        return label
+    }()
+    
     private var searchBar = UISearchBar()
     
     init(viewModel: CurrencySelectionViewModelProtocol) {
@@ -36,31 +70,42 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
     
     private func setupUI() {
         title = "Sending to"
-        view.backgroundColor = .yellow
+        view.backgroundColor = UIColor.Custom.Picker.backgroundColor
         
         searchBar.delegate = self
         searchBar.placeholder = "Search"
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(CurrencyTableViewCell.self, forCellReuseIdentifier: "CurrencyCell")
         
+        
+        view.addSubview(titleLabel)
         view.addSubview(searchBar)
+        view.addSubview(tableViewTitleLabel)
         view.addSubview(tableView)
         
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
         
-        NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        searchBar.snp.makeConstraints { make in
+            make.height.equalTo(32)
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        tableViewTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom).offset(24)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(tableViewTitleLabel.snp.bottom).offset(12)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(20)
+        }
     }
     
     private func bindViewModel() {
@@ -74,10 +119,13 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let country = viewModel.filteredCountries[indexPath.row]
-        
-        cell.textLabel?.text = " \(country.name) • \(country.country) • \(country.code)"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CurrencyCell", for: indexPath) as? CurrencyTableViewCell else {
+            return UITableViewCell()
+        }
+        let item = viewModel.filteredCountries[indexPath.row]
+        cell.set(flagImage: UIImage(named: item.flag))
+        cell.set(countryText: item.country)
+        cell.set(detailText: "\(item.name) • \(item.code)")
         return cell
     }
     

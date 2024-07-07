@@ -14,6 +14,7 @@ protocol Coordinator {
 
 class AppCoordinator: Coordinator {
     var navigationController: UINavigationController
+    var baseController: UIViewController?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -22,6 +23,7 @@ class AppCoordinator: Coordinator {
     func start() {
         let viewModel = CurrencyViewModel(currencyService: DependencyInjector.shared.provideCurrencyService())
         let viewController = ConverterViewController(viewModel: viewModel)
+        baseController = viewController
         viewController.delegate = self
         navigationController.pushViewController(viewController, animated: true)
     }
@@ -32,7 +34,7 @@ class AppCoordinator: Coordinator {
 extension AppCoordinator: ConverterViewControllerDelegate {
     func currencySelectTapped(currentCurrency: Currency, isSender: Bool) {
         Logger.info("Coordinator: presentCurrencySelection")
-        let viewModel = CurrencySelectionViewModel(currencies: [.EUR])
+        let viewModel = CurrencySelectionViewModel(currencies: [.EUR, .GBP, .PLN, .UAH])
         let viewController = CurrencySelectionViewController(viewModel: viewModel)
         viewController.modalPresentationStyle = .formSheet
         viewController.delegate = self
@@ -44,7 +46,9 @@ extension AppCoordinator: ConverterViewControllerDelegate {
 extension AppCoordinator: CurrencySelectionViewControllerDelegate {
     func currencySelected(currency: Currency, isSender: Bool) {
         Logger.info("Coordinator: currencySelected")
-        navigationController.popViewController(animated: true)
+        guard let baseController = baseController as? ConverterViewController else { return }
+        baseController.newCurrencySelected(currency: .GBP, fromSender: true)
+        
     }
     
 }
