@@ -53,7 +53,7 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         let view = UIView()
         view.layer.cornerRadius = 8
         view.backgroundColor = .white
-        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderColor = UIColor.Custom.Picker.SearchBar.borderColor.cgColor
         view.layer.borderWidth = 1
         return view
     }()
@@ -61,7 +61,7 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
     private lazy var searchLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        label.textColor = UIColor.Custom.Picker.titleTextColor
+        label.textColor = UIColor.Custom.Picker.SearchBar.textColor
         label.textAlignment = .left
         label.backgroundColor = .white
         label.text = " Search "
@@ -84,7 +84,8 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
             let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
             searchTextField.leftView = paddingView
             searchTextField.leftViewMode = .always
-            searchTextField.backgroundColor = UIColor.white
+            searchTextField.backgroundColor = UIColor.Custom.Picker.SearchBar.backgroundColor
+            searchTextField.textColor = UIColor.Custom.Picker.SearchBar.textColor
         }
         
         return searchBar
