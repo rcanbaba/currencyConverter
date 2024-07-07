@@ -123,7 +123,10 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         senderAmount = text ?? ""
         guard let amount = senderAmount.toDouble() else {
             Logger.warning("senderAmountUpdated conversion Error, \(text)")
-            return }
+            currencyService.cancelFetchRates()
+            self.updateReceiverAmount?("")
+            return
+        }
         fetchRates(fromCurrency: senderCurrency, toCurrency: receiverCurrency, amount: amount, isSender: true)
     }
     
@@ -131,7 +134,10 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         receiverAmount = text ?? ""
         guard let amount = receiverAmount.toDouble() else {
             Logger.warning("receiverAmountUpdated conversion Error, \(text)")
-            return }
+            currencyService.cancelFetchRates()
+            self.updateSenderAmount?("")
+            return
+        }
         fetchRates(fromCurrency: receiverCurrency, toCurrency: senderCurrency, amount: amount, isSender: false)
     }
 }

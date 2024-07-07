@@ -48,19 +48,18 @@ class BottomErrorView: UIStackView {
         layer.cornerRadius = 8.0
         backgroundColor = UIColor.Custom.Converter.Error.maxErrorBackgroundColor
         
-        addArrangedSubview(stackView)
+        addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(8)
+            make.edges.equalToSuperview().inset(8)
         }
         
         infoImageView.snp.makeConstraints { make in
             make.size.equalTo(16)
         }
-        
-        textLabel.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(8)
-        }
+// TODO: later maybe neeed
+//        textLabel.snp.makeConstraints { make in
+//            make.top.bottom.equalToSuperview().inset(8)
+//        }
 
     }
     
