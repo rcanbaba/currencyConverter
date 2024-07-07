@@ -28,6 +28,7 @@
 		B4FFE9CF2C3A78D000511534 /* CurrencySelectionStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9CE2C3A78D000511534 /* CurrencySelectionStackView.swift */; };
 		B4FFE9D12C3A792D00511534 /* BottomErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9D02C3A792D00511534 /* BottomErrorView.swift */; };
 		B4FFE9D32C3A79DE00511534 /* CurrencyConvertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9D22C3A79DE00511534 /* CurrencyConvertView.swift */; };
+		B4FFE9D52C3A7B7800511534 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9D42C3A7B7800511534 /* AppCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		B4FFE9CE2C3A78D000511534 /* CurrencySelectionStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionStackView.swift; sourceTree = "<group>"; };
 		B4FFE9D02C3A792D00511534 /* BottomErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomErrorView.swift; sourceTree = "<group>"; };
 		B4FFE9D22C3A79DE00511534 /* CurrencyConvertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConvertView.swift; sourceTree = "<group>"; };
+		B4FFE9D42C3A7B7800511534 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 				B4D2C2452C3A6B7600266958 /* Assets.xcassets */,
 				B4D2C2792C3A765F00266958 /* UIColorExtension.swift */,
 				B4D2C27B2C3A767A00266958 /* ColorPalette.swift */,
+				B4FFE9D42C3A7B7800511534 /* AppCoordinator.swift */,
 			);
 			path = currencyConverter;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				B4D2C2702C3A6F0200266958 /* CurrencyService.swift in Sources */,
 				B4D2C2772C3A761700266958 /* ConverterView.swift in Sources */,
 				B4FFE9CD2C3A78A200511534 /* TextFieldView.swift in Sources */,
+				B4FFE9D52C3A7B7800511534 /* AppCoordinator.swift in Sources */,
 				B4D2C2722C3A70E800266958 /* ConverterViewModel.swift in Sources */,
 				B4D2C2812C3A782000266958 /* RateView.swift in Sources */,
 				B4D2C2412C3A6B7400266958 /* ConverterViewController.swift in Sources */,
