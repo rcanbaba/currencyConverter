@@ -20,7 +20,7 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-        let viewModel = CurrencyViewModel(currencyService: CurrencyService())
+        let viewModel = CurrencyViewModel(currencyService: DependencyInjector.shared.provideCurrencyService())
         let viewController = ConverterViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }

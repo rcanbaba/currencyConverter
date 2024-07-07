@@ -29,6 +29,7 @@
 		B4FFE9D12C3A792D00511534 /* BottomErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9D02C3A792D00511534 /* BottomErrorView.swift */; };
 		B4FFE9D32C3A79DE00511534 /* CurrencyConvertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9D22C3A79DE00511534 /* CurrencyConvertView.swift */; };
 		B4FFE9D52C3A7B7800511534 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9D42C3A7B7800511534 /* AppCoordinator.swift */; };
+		B4FFE9D72C3A7D5D00511534 /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9D62C3A7D5D00511534 /* DependencyInjector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		B4FFE9D02C3A792D00511534 /* BottomErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomErrorView.swift; sourceTree = "<group>"; };
 		B4FFE9D22C3A79DE00511534 /* CurrencyConvertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConvertView.swift; sourceTree = "<group>"; };
 		B4FFE9D42C3A7B7800511534 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		B4FFE9D62C3A7D5D00511534 /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				B4D2C2792C3A765F00266958 /* UIColorExtension.swift */,
 				B4D2C27B2C3A767A00266958 /* ColorPalette.swift */,
 				B4FFE9D42C3A7B7800511534 /* AppCoordinator.swift */,
+				B4FFE9D62C3A7D5D00511534 /* DependencyInjector.swift */,
 			);
 			path = currencyConverter;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				B4FFE9CF2C3A78D000511534 /* CurrencySelectionStackView.swift in Sources */,
 				B4D2C2742C3A738900266958 /* Logger.swift in Sources */,
 				B4D2C23F2C3A6B7400266958 /* SceneDelegate.swift in Sources */,
+				B4FFE9D72C3A7D5D00511534 /* DependencyInjector.swift in Sources */,
 				B4D2C26E2C3A6EC400266958 /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
