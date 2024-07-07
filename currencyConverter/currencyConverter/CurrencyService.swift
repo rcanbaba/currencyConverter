@@ -23,12 +23,12 @@ class CurrencyService: CurrencyServiceProtocol {
         dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 completion(.failure(error))
-                print("ERROR:11 \(error.localizedDescription)")
+                Logger.warning("ERROR: network, \(error.localizedDescription)")
                 return
             }
             guard let data = data else {
                 completion(.failure(NSError(domain: "", code: -1, userInfo: nil)))
-                print("ERROR: data error")
+                Logger.warning("ERROR: network - data error")
                 return
             }
             do {
@@ -36,13 +36,14 @@ class CurrencyService: CurrencyServiceProtocol {
                 completion(.success(rate))
             } catch {
                 completion(.failure(error))
-                print("ERROR:22 \(error.localizedDescription)")
+                Logger.warning("ERROR: network - decoder \(error.localizedDescription)")
             }
         }
         dataTask?.resume()
     }
 
     func cancelFetchRates() {
+        Logger.info("Network - Cancel Task Called")
         dataTask?.cancel()
     }
 }

@@ -49,19 +49,19 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     
     func fetchRates(fromCurrency: Currency, toCurrency: Currency, amount: Double, isSender: Bool) {
         
-        print("from: \(fromCurrency.rawValue) - to: \(toCurrency.rawValue) - amount: \(amount) - isSender: \(isSender)")
+        Logger.info("from: \(fromCurrency.rawValue) - to: \(toCurrency.rawValue) - amount: \(amount) - isSender: \(isSender)")
         
-        print("sender: \(senderCurrency.rawValue) - to: \(receiverCurrency.rawValue) - SenderAmount: \(senderAmount) - ReceiverAmount: \(receiverAmount)")
+        Logger.info("sender: \(senderCurrency.rawValue) - to: \(receiverCurrency.rawValue) - SenderAmount: \(senderAmount) - ReceiverAmount: \(receiverAmount)")
         
-        // TODO: burda her zaman sender kontrol edilmeli, hata olursa return direkt
+        // TODO: just check the sender
 //        guard validateAmount(amount, for: fromCurrency) else {
 //            onError2?("Amount exceeds limit for \(fromCurrency.rawValue)")
 //            return
 //        }
-        print("Request sended")
+        Logger.info("Request sended on vm")
         currencyService.fetchRates(from: fromCurrency.rawValue, to: toCurrency.rawValue, amount: amount) { [weak self] result in
             guard let self = self else { return }
-            print("REsponsedd c")
+            Logger.info("Response on vm")
             switch result {
             case .success(let rate):
                 self.onRatesFetched?(rate)
@@ -122,7 +122,7 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         // en sağda 1 virgül kaldıysa trimle
         senderAmount = text ?? ""
         guard let amount = senderAmount.toDouble() else {
-            print("ERROR conver11")
+            Logger.warning("senderAmountUpdated conversion Error, \(text)")
             return }
         fetchRates(fromCurrency: senderCurrency, toCurrency: receiverCurrency, amount: amount, isSender: true)
     }
@@ -130,7 +130,7 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     func receiverAmountUpdated(_ text: String?) {
         receiverAmount = text ?? ""
         guard let amount = receiverAmount.toDouble() else {
-            print("ERROR conver22")
+            Logger.warning("receiverAmountUpdated conversion Error, \(text)")
             return }
         fetchRates(fromCurrency: receiverCurrency, toCurrency: senderCurrency, amount: amount, isSender: false)
     }

@@ -22,19 +22,17 @@ class ConverterViewController: UIViewController {
         print("Requested")
         viewModel.onRatesFetched = { rate in
             // Update UI with fetched rates
-            
-            print("RATE: from: \(rate.from) - \(rate.rate) - \(rate.to)")
+            Logger.info("RATE: from: \(rate.from) - \(rate.rate) - \(rate.to)")
 
-            
         }
         viewModel.onError = { error in
-            // Handle error
-            print("Errorr1231")
+
+            Logger.warning("VM onError")
 
         }
         viewModel.onError2 = { errorMessage in
             
-            print("Error Limit", errorMessage)
+            Logger.warning("VM onError2")
  
             
         }
