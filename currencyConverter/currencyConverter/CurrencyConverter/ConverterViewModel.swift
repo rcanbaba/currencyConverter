@@ -6,6 +6,8 @@
 //
 
 import Foundation
+
+// TODO: UIKit in viewModel ??? get UIImage from another way
 import UIKit
 
 protocol CurrencyViewModelProtocol {

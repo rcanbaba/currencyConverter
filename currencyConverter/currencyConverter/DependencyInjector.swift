@@ -7,6 +7,7 @@
 
 import Foundation
 
+// TODO: this implementation wrong, hold 1 singleton network service, check swinject implementations
 class DependencyInjector {
     static let shared = DependencyInjector()
     

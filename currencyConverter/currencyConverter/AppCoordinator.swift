@@ -27,10 +27,9 @@ class AppCoordinator: Coordinator {
         viewController.delegate = self
         navigationController.pushViewController(viewController, animated: true)
     }
-    
-    // TODO: currency selection page will be implemented. !!
 }
 
+//TODO: i am not sure this 1 to 1 implementation maybe 1 singleton manager hold states
 extension AppCoordinator: ConverterViewControllerDelegate {
     func currencySelectTapped(currencyList: [Currency], isSender: Bool) {
         Logger.info("Coordinator: presentCurrencySelection")

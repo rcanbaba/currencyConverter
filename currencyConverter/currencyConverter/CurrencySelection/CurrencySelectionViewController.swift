@@ -64,6 +64,7 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         label.textColor = UIColor.Custom.Picker.SearchBar.textColor
         label.textAlignment = .left
         label.backgroundColor = .white
+        // TODO: this is hacky add back view :)
         label.text = " Search "
         return label
     }()
@@ -111,6 +112,7 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         view.backgroundColor = UIColor.Custom.Picker.backgroundColor
         
         searchBar.delegate = self
+        //TODO: remove placeholder
         searchBar.placeholder = "Search"
         
         view.addSubview(titleLabel)

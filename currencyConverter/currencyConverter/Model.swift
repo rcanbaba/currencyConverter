@@ -86,5 +86,6 @@ enum Currency: String, CaseIterable {
         }
     }
     
+    //TODO: create get UIImage var
 }
 
