@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol CurrencyViewModelProtocol {
     var onRatesFetched: ((CurrencyRate) -> Void)? { get set }
@@ -23,6 +24,11 @@ protocol CurrencyViewModelProtocol {
     var updateSenderAmount: ((String) -> Void)? { get set }
     
     var updateRateText: ((String) -> Void)? { get set }
+    var updateSenderCurrencyText: ((String) -> Void)? { get set }
+    var updateSenderCurrencyImage: ((UIImage?) -> Void)? { get set }
+    
+    var updateReceiverCurrencyText: ((String) -> Void)? { get set }
+    var updateReceiverCurrencyImage: ((UIImage?) -> Void)? { get set }
     
 
     func cancelFetchRates()
@@ -33,6 +39,8 @@ protocol CurrencyViewModelProtocol {
     func receiverAmountUpdated(_ text: String?)
     func changeSenderCurrencyTapped()
     func changeReceiverCurrencyTapped()
+    func changeSenderCurrency(_ currency: Currency)
+    func changeReceiverCurrency(_ currency: Currency)
 }
 
 
@@ -49,7 +57,12 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     
     var updateReceiverAmount: ((String) -> Void)?
     var updateSenderAmount: ((String) -> Void)?
+    
     var updateRateText: ((String) -> Void)?
+    var updateSenderCurrencyText: ((String) -> Void)?
+    var updateSenderCurrencyImage: ((UIImage?) -> Void)?
+    var updateReceiverCurrencyText: ((String) -> Void)?
+    var updateReceiverCurrencyImage: ((UIImage?) -> Void)?
     
     var showSenderCurrencySelectionFor: (([Currency]) -> Void)?
     var showReceiverCurrencySelectionFor: (([Currency]) -> Void)?
@@ -184,7 +197,20 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     func getSelectableCurrencies(hiddenCurrency: Currency) -> [Currency] {
         return Currency.allCases.filter { $0 != hiddenCurrency }
     }
-
+    
+    func changeSenderCurrency(_ currency: Currency) {
+        let currencyText = currency.rawValue
+        let currencyImage = UIImage(named: currency.currencyFlagImageName)
+        updateSenderCurrencyText?(currencyText)
+        updateSenderCurrencyImage?(currencyImage)
+    }
+    
+    func changeReceiverCurrency(_ currency: Currency) {
+        let currencyText = currency.rawValue
+        let currencyImage = UIImage(named: currency.currencyFlagImageName)
+        updateReceiverCurrencyText?(currencyText)
+        updateReceiverCurrencyImage?(currencyImage)
+    }
 }
 
 extension String {

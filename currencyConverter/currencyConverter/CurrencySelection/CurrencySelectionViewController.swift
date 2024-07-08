@@ -156,7 +156,7 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         tableView.snp.makeConstraints { make in
             make.top.equalTo(tableViewTitleLabel.snp.bottom).offset(12)
             make.leading.trailing.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().inset(20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     }
     
