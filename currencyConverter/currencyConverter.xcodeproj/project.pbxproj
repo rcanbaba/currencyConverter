@@ -30,6 +30,9 @@
 		B4FFE9D32C3A79DE00511534 /* CurrencyConvertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9D22C3A79DE00511534 /* CurrencyConvertView.swift */; };
 		B4FFE9D52C3A7B7800511534 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9D42C3A7B7800511534 /* AppCoordinator.swift */; };
 		B4FFE9D72C3A7D5D00511534 /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9D62C3A7D5D00511534 /* DependencyInjector.swift */; };
+		B4FFE9DA2C3AD12A00511534 /* CurrencySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9D92C3AD12A00511534 /* CurrencySelectionViewController.swift */; };
+		B4FFE9DC2C3AD1D900511534 /* CurrencySelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9DB2C3AD1D900511534 /* CurrencySelectionViewModel.swift */; };
+		B4FFE9DE2C3AF07F00511534 /* CurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFE9DD2C3AF07F00511534 /* CurrencyTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +79,9 @@
 		B4FFE9D22C3A79DE00511534 /* CurrencyConvertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConvertView.swift; sourceTree = "<group>"; };
 		B4FFE9D42C3A7B7800511534 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		B4FFE9D62C3A7D5D00511534 /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
+		B4FFE9D92C3AD12A00511534 /* CurrencySelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionViewController.swift; sourceTree = "<group>"; };
+		B4FFE9DB2C3AD1D900511534 /* CurrencySelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionViewModel.swift; sourceTree = "<group>"; };
+		B4FFE9DD2C3AF07F00511534 /* CurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +133,8 @@
 		B4D2C23B2C3A6B7400266958 /* currencyConverter */ = {
 			isa = PBXGroup;
 			children = (
-				B4D2C2752C3A75DC00266958 /* Converter */,
+				B4D2C2752C3A75DC00266958 /* CurrencyConverter */,
+				B4FFE9D82C3ACFC000511534 /* CurrencySelection */,
 				B4D2C26C2C3A6E6200266958 /* App */,
 				B4D2C26D2C3A6EC400266958 /* Model.swift */,
 				B4D2C26F2C3A6F0200266958 /* CurrencyService.swift */,
@@ -169,7 +176,7 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		B4D2C2752C3A75DC00266958 /* Converter */ = {
+		B4D2C2752C3A75DC00266958 /* CurrencyConverter */ = {
 			isa = PBXGroup;
 			children = (
 				B4D2C2782C3A761E00266958 /* ViewComponents */,
@@ -177,7 +184,7 @@
 				B4D2C2402C3A6B7400266958 /* ConverterViewController.swift */,
 				B4D2C2762C3A761700266958 /* ConverterView.swift */,
 			);
-			path = Converter;
+			path = CurrencyConverter;
 			sourceTree = "<group>";
 		};
 		B4D2C2782C3A761E00266958 /* ViewComponents */ = {
@@ -190,6 +197,16 @@
 				B4FFE9D22C3A79DE00511534 /* CurrencyConvertView.swift */,
 			);
 			path = ViewComponents;
+			sourceTree = "<group>";
+		};
+		B4FFE9D82C3ACFC000511534 /* CurrencySelection */ = {
+			isa = PBXGroup;
+			children = (
+				B4FFE9D92C3AD12A00511534 /* CurrencySelectionViewController.swift */,
+				B4FFE9DB2C3AD1D900511534 /* CurrencySelectionViewModel.swift */,
+				B4FFE9DD2C3AF07F00511534 /* CurrencyTableViewCell.swift */,
+			);
+			path = CurrencySelection;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,10 +347,13 @@
 			files = (
 				B4FFE9D32C3A79DE00511534 /* CurrencyConvertView.swift in Sources */,
 				B4D2C2702C3A6F0200266958 /* CurrencyService.swift in Sources */,
+				B4FFE9DA2C3AD12A00511534 /* CurrencySelectionViewController.swift in Sources */,
 				B4D2C2772C3A761700266958 /* ConverterView.swift in Sources */,
 				B4FFE9CD2C3A78A200511534 /* TextFieldView.swift in Sources */,
+				B4FFE9DC2C3AD1D900511534 /* CurrencySelectionViewModel.swift in Sources */,
 				B4FFE9D52C3A7B7800511534 /* AppCoordinator.swift in Sources */,
 				B4D2C2722C3A70E800266958 /* ConverterViewModel.swift in Sources */,
+				B4FFE9DE2C3AF07F00511534 /* CurrencyTableViewCell.swift in Sources */,
 				B4D2C2812C3A782000266958 /* RateView.swift in Sources */,
 				B4D2C2412C3A6B7400266958 /* ConverterViewController.swift in Sources */,
 				B4FFE9D12C3A792D00511534 /* BottomErrorView.swift in Sources */,
