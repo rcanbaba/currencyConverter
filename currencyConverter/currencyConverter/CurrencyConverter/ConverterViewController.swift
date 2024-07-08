@@ -57,8 +57,9 @@ class ConverterViewController: UIViewController {
     }
     
     private func configureUI() {
-        currencyConvertView.setSender(borderColor: .Custom.Converter.Error.borderColor, borderWidth: 2.0)
-        currencyConvertView.setSender(inputColor: .Custom.Converter.Amount.redText)
+        // TODO: all this data must be taken from view model
+        currencyConvertView.setSender(borderColor: UIColor.clear, borderWidth: 0.0)
+        currencyConvertView.setSender(inputColor: .Custom.Converter.Amount.blackText)
         currencyConvertView.setSender(titleText: "Sending from")
         currencyConvertView.setSender(backgroundColor: .Custom.Converter.Sender.backgroundColor)
         
@@ -94,6 +95,8 @@ class ConverterViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.errorView.isHidden = false
                 self?.errorView.set(errorText: errorText)
+                self?.currencyConvertView.setSender(borderColor: .Custom.Converter.Error.borderColor, borderWidth: 2.0)
+                self?.currencyConvertView.setSender(inputColor: .Custom.Converter.Amount.redText)
             }
         }
         
@@ -101,6 +104,9 @@ class ConverterViewController: UIViewController {
             Logger.warning("VM fetch request start")
             DispatchQueue.main.async {
                 self?.errorView.isHidden = true
+                self?.errorView.set(errorText: "")
+                self?.currencyConvertView.setSender(borderColor: UIColor.clear, borderWidth: 0.0)
+                self?.currencyConvertView.setSender(inputColor: .Custom.Converter.Amount.blueText)
             }
         }
         
