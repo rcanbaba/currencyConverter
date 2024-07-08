@@ -7,12 +7,8 @@
 
 import Foundation
 
-// TODO: UIKit in viewModel ??? get UIImage from another way
-import UIKit
-
 protocol CurrencyViewModelProtocol {
-    var onRatesFetched: ((CurrencyRate) -> Void)? { get set }
-    var onError: ((Error) -> Void)? { get set }
+    var onError: ((String) -> Void)? { get set }
     var onError2: ((String) -> Void)? { get set }
     var onReceiverAmountError: ((String) -> Void)? { get set }
     
@@ -23,16 +19,13 @@ protocol CurrencyViewModelProtocol {
     
     var updateRateText: ((String) -> Void)? { get set }
     var updateSenderCurrencyText: ((String) -> Void)? { get set }
-    var updateSenderCurrencyImage: ((UIImage?) -> Void)? { get set }
+    var updateSenderCurrencyImage: ((Currency) -> Void)? { get set }
     
     var updateReceiverCurrencyText: ((String) -> Void)? { get set }
-    var updateReceiverCurrencyImage: ((UIImage?) -> Void)? { get set }
+    var updateReceiverCurrencyImage: ((Currency) -> Void)? { get set }
     
-
-    func cancelFetchRates()
     func validateAmount(_ amount: Double, for currency: Currency) -> Bool
-    func setFromCurrency(_ currency: Currency)
-    func setToCurrency(_ currency: Currency)
+
     func senderAmountUpdated(_ text: String?)
     func receiverAmountUpdated(_ text: String?)
     func changeSenderCurrencyTapped()
@@ -42,14 +35,12 @@ protocol CurrencyViewModelProtocol {
     func setDefaultValues()
 }
 
-
 class CurrencyViewModel: CurrencyViewModelProtocol {
     
-    private let currencyService: CurrencyServiceProtocol
+    private let networkService: NetworkServiceProtocol
     private let coordinator: Coordinator
     
-    var onRatesFetched: ((CurrencyRate) -> Void)?
-    var onError: ((Error) -> Void)?
+    var onError: ((String) -> Void)?
     var onError2: ((String) -> Void)?
     var onReceiverAmountError: ((String) -> Void)?
     
@@ -60,9 +51,9 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     
     var updateRateText: ((String) -> Void)?
     var updateSenderCurrencyText: ((String) -> Void)?
-    var updateSenderCurrencyImage: ((UIImage?) -> Void)?
+    var updateSenderCurrencyImage: ((Currency) -> Void)?
     var updateReceiverCurrencyText: ((String) -> Void)?
-    var updateReceiverCurrencyImage: ((UIImage?) -> Void)?
+    var updateReceiverCurrencyImage: ((Currency) -> Void)?
     
     private var senderCurrency: Currency = .PLN
     private var receiverCurrency: Currency = .UAH
@@ -70,8 +61,8 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     private var receiverAmount: String = ""
     private var rate: Double = .zero
     
-    init(currencyService: CurrencyServiceProtocol, coordinator: Coordinator) {
-        self.currencyService = currencyService
+    init(networkService: NetworkServiceProtocol, coordinator: Coordinator) {
+        self.networkService = networkService
         self.coordinator = coordinator
     }
     
@@ -84,14 +75,13 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         Logger.info("sender: \(senderCurrency.rawValue) - to: \(receiverCurrency.rawValue) - SenderAmount: \(senderAmount) - ReceiverAmount: \(receiverAmount)")
 
         Logger.info("Request sended on vm")
-        currencyService.fetchRates(from: fromCurrency.rawValue, to: toCurrency.rawValue, amount: amount) { [weak self] result in
+        networkService.cancelTask()
+        let request = CurrencyRateRequest(from: fromCurrency.rawValue, to: toCurrency.rawValue, amount: amount)
+        networkService.execute(request) { [weak self] (result: Result<CurrencyRate, Error>) in
             guard let self = self else { return }
-            Logger.info("Response on vm")
             switch result {
-            case .success(let rate):
-                self.onRatesFetched?(rate)
-                
-                let convertedAmount = self.calculateConvertedAmount(requestAmount: amount, rate: rate.rate)
+            case .success(let response):
+                let convertedAmount = self.calculateConvertedAmount(requestAmount: amount, rate: response.rate)
                 let formattedAmount = self.formatAmount(convertedAmount)
                 if isSender {
                     self.receiverAmount = formattedAmount
@@ -105,12 +95,21 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
                     self.updateSenderAmount?(formattedAmount)
                 }
                 
-                let rateText = getRateText(from: fromCurrency.rawValue, to: toCurrency.rawValue, rate: self.formatAmount(rate.rate))
+                let rateText = getRateText(from: fromCurrency.rawValue, to: toCurrency.rawValue, rate: self.formatAmount(response.rate))
                 self.updateRateText?(rateText)
                 
             case .failure(let error):
-                self.onError?(error)
+                let errorMessage = self.getErrorMessage(for: error)
+                self.onError?(errorMessage)
             }
+        }
+    }
+    
+    func getErrorMessage(for error: Error) -> String {
+        if let networkError = error as? NetworkError {
+            return networkError.description
+        } else {
+            return NetworkError.unknownError.description
         }
     }
     
@@ -130,10 +129,6 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         return requestAmount * rate
     }
     
-    func cancelFetchRates() {
-        currencyService.cancelFetchRates()
-    }
-    
     func validateAmount(_ amount: Double, for currency: Currency) -> Bool {
         guard let limit = Currency.limits[currency] else {
             return false
@@ -146,26 +141,17 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         onReceiverAmountError?(errorPreText + Currency.limitsString[currency]! + " " + currency.rawValue)
     }
     
-    func setFromCurrency(_ currency: Currency) {
-        senderCurrency = currency
-    }
-    
-    func setToCurrency(_ currency: Currency) {
-        receiverCurrency = currency
-    }
-    
     func senderAmountUpdated(_ text: String?) {
-        // en sağda 1 virgül kaldıysa trimle
         senderAmount = text ?? ""
         guard let amount = senderAmount.toDouble() else {
             Logger.warning("senderAmountUpdated conversion Error, \(text ?? "null")")
-            currencyService.cancelFetchRates()
+            networkService.cancelTask()
             self.updateReceiverAmount?("")
             return
         }
         
         guard validateAmount(amount, for: senderCurrency) else {
-            currencyService.cancelFetchRates()
+            networkService.cancelTask()
             sendSenderValidationError(for: senderCurrency)
             return
         }
@@ -177,7 +163,7 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         receiverAmount = text ?? ""
         guard let amount = receiverAmount.toDouble() else {
             Logger.warning("receiverAmountUpdated conversion Error, \(text ?? "null")")
-            currencyService.cancelFetchRates()
+            networkService.cancelTask()
             self.updateSenderAmount?("")
             return
         }
@@ -201,16 +187,15 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     func changeSenderCurrency(_ currency: Currency) {
         guard !checkCurrencyIsSame(new: currency, old: senderCurrency) else { return }
         let currencyText = currency.rawValue
-        let currencyImage = UIImage(named: currency.currencyFlagImageName)
         
         senderCurrency = currency
         
         updateSenderCurrencyText?(currencyText)
-        updateSenderCurrencyImage?(currencyImage)
+        updateSenderCurrencyImage?(currency)
         
         guard let amount = senderAmount.toDouble() else {
             Logger.warning("receiverAmountUpdated change conversion Error, \(senderAmount)")
-            currencyService.cancelFetchRates()
+            networkService.cancelTask()
             self.updateSenderAmount?("")
             return
         }
@@ -220,16 +205,15 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     func changeReceiverCurrency(_ currency: Currency) {
         guard !checkCurrencyIsSame(new: currency, old: receiverCurrency) else { return }
         let currencyText = currency.rawValue
-        let currencyImage = UIImage(named: currency.currencyFlagImageName)
         
         receiverCurrency = currency
         
         updateReceiverCurrencyText?(currencyText)
-        updateReceiverCurrencyImage?(currencyImage)
+        updateReceiverCurrencyImage?(currency)
         
         guard let amount = receiverAmount.toDouble() else {
             Logger.warning("receiverAmountUpdated change conversion Error, \(receiverAmount)")
-            currencyService.cancelFetchRates()
+            networkService.cancelTask()
             self.updateReceiverAmount?("")
             return
         }
@@ -249,9 +233,9 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         
         updateSenderAmount?(senderAmount)
         updateSenderCurrencyText?(senderCurrency.rawValue)
-        updateSenderCurrencyImage?(UIImage(named: senderCurrency.currencyFlagImageName))
+        updateSenderCurrencyImage?(senderCurrency)
         updateReceiverCurrencyText?(receiverCurrency.rawValue)
-        updateReceiverCurrencyImage?(UIImage(named: receiverCurrency.currencyFlagImageName))
+        updateReceiverCurrencyImage?(receiverCurrency)
         
         let amount = senderAmount.toDouble() ?? 300
         fetchRates(fromCurrency: senderCurrency, toCurrency: receiverCurrency, amount: amount, isSender: true)

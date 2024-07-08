@@ -24,7 +24,7 @@ class AppCoordinator: Coordinator {
     
     func start() {
         let viewModel = CurrencyViewModel(
-            currencyService: DependencyInjector.shared.provideCurrencyService(),
+            networkService: DependencyInjector.shared.provideNetworkService(),
             coordinator: DependencyInjector.shared.provideAppCoordinator()
         )
         let viewController = ConverterViewController(viewModel: viewModel)

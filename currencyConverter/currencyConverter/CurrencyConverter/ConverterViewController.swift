@@ -78,8 +78,8 @@ class ConverterViewController: UIViewController {
             }
         }
         
-        viewModel.onError = { error in
-            Logger.warning("VM onError")
+        viewModel.onError = { errorText in
+            Logger.warning("-----BURDA  aaaa  VM onError \(errorText)")
         }
         
         viewModel.onError2 = { [weak self] errorMessage in
@@ -124,9 +124,9 @@ class ConverterViewController: UIViewController {
             }
         }
         
-        viewModel.updateSenderCurrencyImage = { [weak self] image in
+        viewModel.updateSenderCurrencyImage = { [weak self] currency in
             DispatchQueue.main.async {
-                self?.currencyConvertView.setSender(flagImage: image)
+                self?.currencyConvertView.setSender(flagImage: currency.currencyFlagImage)
             }
         }
         
@@ -136,9 +136,9 @@ class ConverterViewController: UIViewController {
             }
         }
         
-        viewModel.updateReceiverCurrencyImage = { [weak self] image in
+        viewModel.updateReceiverCurrencyImage = { [weak self] currency in
             DispatchQueue.main.async {
-                self?.currencyConvertView.setReceiver(flagImage: image)
+                self?.currencyConvertView.setReceiver(flagImage: currency.currencyFlagImage)
             }
         }
     }

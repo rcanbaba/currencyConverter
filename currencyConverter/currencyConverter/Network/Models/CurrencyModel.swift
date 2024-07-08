@@ -1,19 +1,13 @@
 //
-//  Model.swift
+//  CurrencyModel.swift
 //  currencyConverter
 //
-//  Created by Can Babaoğlu on 7.07.2024.
+//  Created by Can Babaoğlu on 8.07.2024.
 //
 
 import Foundation
+import UIKit
 
-struct CurrencyRate: Codable {
-    let from: String
-    let to: String
-    let rate: Double
-}
-
-//TODO: create new class
 enum Currency: String, CaseIterable {
     case PLN
     case EUR
@@ -86,6 +80,16 @@ enum Currency: String, CaseIterable {
         }
     }
     
-    //TODO: create get UIImage var
+    var currencyFlagImage: UIImage? {
+        switch self {
+        case .UAH:
+            return UIImage(named: "uah-flag-icon")
+        case .EUR:
+            return UIImage(named: "eur-flag-icon")
+        case .GBP:
+            return UIImage(named: "gbp-flag-icon")
+        case .PLN:
+            return UIImage(named: "pln-flag-icon")
+        }
+    }
 }
-
