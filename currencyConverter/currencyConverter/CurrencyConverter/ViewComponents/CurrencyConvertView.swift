@@ -39,7 +39,7 @@ class CurrencyConvertView: UIView, UITextFieldDelegate{
     
     private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [senderTextFieldView, receiverTextFieldView])
-        stackView.alignment = .leading
+        stackView.alignment = .fill
         stackView.axis = .vertical
         stackView.spacing = 0
         return stackView

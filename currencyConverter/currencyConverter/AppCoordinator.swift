@@ -20,7 +20,7 @@ class AppCoordinator: Coordinator {
         self.navigationController = navigationController
     }
     
-    func start() {
+    func start() { // TODO: heryere coordinator inject edilmeli viewmodele
         let viewModel = CurrencyViewModel(currencyService: DependencyInjector.shared.provideCurrencyService())
         let viewController = ConverterViewController(viewModel: viewModel)
         baseController = viewController
@@ -39,7 +39,6 @@ extension AppCoordinator: ConverterViewControllerDelegate {
         viewController.delegate = self
         navigationController.present(viewController, animated: true, completion: nil)
     }
-    
 }
 
 extension AppCoordinator: CurrencySelectionViewControllerDelegate {
@@ -47,7 +46,5 @@ extension AppCoordinator: CurrencySelectionViewControllerDelegate {
         Logger.info("Coordinator: currencySelected")
         guard let baseController = baseController as? ConverterViewController else { return }
         baseController.newCurrencySelected(currency: currency, fromSender: isSender)
-        
     }
-    
 }

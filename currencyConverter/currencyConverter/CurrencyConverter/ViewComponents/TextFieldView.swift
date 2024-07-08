@@ -21,7 +21,6 @@ class TextFieldView: UIView {
         textField.borderStyle = .none
         textField.keyboardType = .decimalPad
         textField.font = UIFont.systemFont(ofSize: 32)
-        textField.placeholder = "enter amount              "
         textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         textField.setContentHuggingPriority(.defaultLow, for: .horizontal)
         textField.backgroundColor = .clear
@@ -38,10 +37,17 @@ class TextFieldView: UIView {
         label.textColor = UIColor.Custom.Converter.Receiver.titleTextColor
         label.numberOfLines = 1
         label.textAlignment = .left
-        label.text = "Sending from"
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.setContentHuggingPriority(.required, for: .horizontal)
         return label
+    }()
+    
+    // I need it because in stackView setContentCompressionResistancePriority, setContentHuggingPriority not working well
+    private lazy var wrapperView: UIView = {
+        let view = UIView()
+        view.setContentCompressionResistancePriority(.required, for: .horizontal)
+        view.setContentHuggingPriority(.required, for: .horizontal)
+        return view
     }()
     
     private lazy var leftStackView: UIStackView = {
@@ -92,16 +98,23 @@ class TextFieldView: UIView {
         layer.borderColor = UIColor.red.cgColor
         
         
-        addSubview(leftStackView)
+        
+        addSubview(titleLabel)
+        addSubview(currencySelectionStackView)
         addSubview(textField)
         
-        leftStackView.snp.makeConstraints { (make) in
+        titleLabel.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().inset(12)
-            make.top.bottom.equalToSuperview().inset(16)
+            make.top.equalToSuperview().inset(18)
+        }
+        
+        currencySelectionStackView.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview().inset(12)
+            make.bottom.equalToSuperview().inset(16)
         }
         
         textField.snp.makeConstraints { (make) in
-            make.leading.equalTo(leftStackView.snp.trailing).offset(12)
+            make.leading.equalTo(titleLabel.snp.trailing).offset(12)
             make.trailing.equalToSuperview().inset(12)
             make.height.equalTo(40)
             make.top.bottom.equalToSuperview().inset(26)
