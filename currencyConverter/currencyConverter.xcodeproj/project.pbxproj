@@ -19,7 +19,6 @@
 		B4D2C2702C3A6F0200266958 /* CurrencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2C26F2C3A6F0200266958 /* CurrencyService.swift */; };
 		B4D2C2722C3A70E800266958 /* ConverterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2C2712C3A70E800266958 /* ConverterViewModel.swift */; };
 		B4D2C2742C3A738900266958 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2C2732C3A738900266958 /* Logger.swift */; };
-		B4D2C2772C3A761700266958 /* ConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2C2762C3A761700266958 /* ConverterView.swift */; };
 		B4D2C27A2C3A765F00266958 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2C2792C3A765F00266958 /* UIColorExtension.swift */; };
 		B4D2C27C2C3A767A00266958 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2C27B2C3A767A00266958 /* ColorPalette.swift */; };
 		B4D2C2812C3A782000266958 /* RateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2C2802C3A782000266958 /* RateView.swift */; };
@@ -69,7 +68,6 @@
 		B4D2C26F2C3A6F0200266958 /* CurrencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyService.swift; sourceTree = "<group>"; };
 		B4D2C2712C3A70E800266958 /* ConverterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterViewModel.swift; sourceTree = "<group>"; };
 		B4D2C2732C3A738900266958 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		B4D2C2762C3A761700266958 /* ConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterView.swift; sourceTree = "<group>"; };
 		B4D2C2792C3A765F00266958 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		B4D2C27B2C3A767A00266958 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
 		B4D2C2802C3A782000266958 /* RateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateView.swift; sourceTree = "<group>"; };
@@ -182,7 +180,6 @@
 				B4D2C2782C3A761E00266958 /* ViewComponents */,
 				B4D2C2712C3A70E800266958 /* ConverterViewModel.swift */,
 				B4D2C2402C3A6B7400266958 /* ConverterViewController.swift */,
-				B4D2C2762C3A761700266958 /* ConverterView.swift */,
 			);
 			path = CurrencyConverter;
 			sourceTree = "<group>";
@@ -348,7 +345,6 @@
 				B4FFE9D32C3A79DE00511534 /* CurrencyConvertView.swift in Sources */,
 				B4D2C2702C3A6F0200266958 /* CurrencyService.swift in Sources */,
 				B4FFE9DA2C3AD12A00511534 /* CurrencySelectionViewController.swift in Sources */,
-				B4D2C2772C3A761700266958 /* ConverterView.swift in Sources */,
 				B4FFE9CD2C3A78A200511534 /* TextFieldView.swift in Sources */,
 				B4FFE9DC2C3AD1D900511534 /* CurrencySelectionViewModel.swift in Sources */,
 				B4FFE9D52C3A7B7800511534 /* AppCoordinator.swift in Sources */,
