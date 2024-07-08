@@ -96,8 +96,10 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
                 let convertedAmount = self.calculateConvertedAmount(requestAmount: amount, rate: rate.rate)
                 let formattedAmount = self.formatAmount(convertedAmount)
                 if isSender {
+                    self.receiverAmount = formattedAmount
                     self.updateReceiverAmount?(formattedAmount)
                 } else {
+                    self.senderAmount = formattedAmount
                     guard validateAmount(convertedAmount, for: senderCurrency) else {
                         sendSenderValidationError(for: senderCurrency)
                         return
@@ -199,18 +201,48 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     }
     
     func changeSenderCurrency(_ currency: Currency) {
+        guard !checkCurrencyIsSame(new: currency, old: senderCurrency) else { return }
         let currencyText = currency.rawValue
         let currencyImage = UIImage(named: currency.currencyFlagImageName)
+        
+        senderCurrency = currency
+        
         updateSenderCurrencyText?(currencyText)
         updateSenderCurrencyImage?(currencyImage)
+        
+        guard let amount = senderAmount.toDouble() else {
+            Logger.warning("receiverAmountUpdated change conversion Error, \(senderAmount)")
+            currencyService.cancelFetchRates()
+            self.updateSenderAmount?("")
+            return
+        }
+        fetchRates(fromCurrency: senderCurrency, toCurrency: receiverCurrency, amount: amount, isSender: true)
     }
     
     func changeReceiverCurrency(_ currency: Currency) {
+        guard !checkCurrencyIsSame(new: currency, old: receiverCurrency) else { return }
         let currencyText = currency.rawValue
         let currencyImage = UIImage(named: currency.currencyFlagImageName)
+        
+        receiverCurrency = currency
+        
         updateReceiverCurrencyText?(currencyText)
         updateReceiverCurrencyImage?(currencyImage)
+        
+        guard let amount = receiverAmount.toDouble() else {
+            Logger.warning("receiverAmountUpdated change conversion Error, \(receiverAmount)")
+            currencyService.cancelFetchRates()
+            self.updateReceiverAmount?("")
+            return
+        }
+        fetchRates(fromCurrency: receiverCurrency, toCurrency: senderCurrency, amount: amount, isSender: false)
     }
+    
+    func checkCurrencyIsSame(new: Currency, old: Currency) -> Bool {
+        return new == old
+    }
+    
+    
 }
 
 extension String {
