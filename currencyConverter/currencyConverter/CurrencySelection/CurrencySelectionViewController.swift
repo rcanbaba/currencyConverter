@@ -7,13 +7,7 @@
 
 import UIKit
 
-protocol CurrencySelectionViewControllerDelegate: AnyObject {
-    func currencySelected(currency: Currency, isSender: Bool)
-}
-
 class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-    
-    weak var delegate: CurrencySelectionViewControllerDelegate?
     
     private var viewModel: CurrencySelectionViewModelProtocol
     
@@ -112,8 +106,6 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         view.backgroundColor = UIColor.Custom.Picker.backgroundColor
         
         searchBar.delegate = self
-        //TODO: remove placeholder
-        searchBar.placeholder = "Search"
         
         view.addSubview(titleLabel)
         
@@ -189,8 +181,8 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCountry = viewModel.filteredCountries[indexPath.row]
+        viewModel.currencySelected(with: Currency(rawValue: selectedCountry.code)!)
         self.dismiss(animated: true)
-        delegate?.currencySelected(currency: Currency(rawValue: selectedCountry.code)!, isSender: viewModel.isSender)
     }
 }
 

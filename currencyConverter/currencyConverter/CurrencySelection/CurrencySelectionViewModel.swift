@@ -22,9 +22,12 @@ protocol CurrencySelectionViewModelProtocol {
     var isSender: Bool { get }
     var titleText: String { get }
     func filterCountries(with query: String)
+    func currencySelected(with currency: Currency)
 }
 
 class CurrencySelectionViewModel: CurrencySelectionViewModelProtocol {
+    
+    private let coordinator: Coordinator
     var list: [CurrencyListItem] = []
     var isSender: Bool
     var filteredCountries: [CurrencyListItem] = []
@@ -34,7 +37,8 @@ class CurrencySelectionViewModel: CurrencySelectionViewModelProtocol {
         return isSender ? "Receiving from" : "Sending to"
     }
     
-    init(currencies: [Currency], isSender: Bool) {
+    init(coordinator: Coordinator, currencies: [Currency], isSender: Bool) {
+        self.coordinator = coordinator
         self.isSender = isSender
         self.list = currencies.map { currency in
             return CurrencyListItem(
@@ -54,5 +58,9 @@ class CurrencySelectionViewModel: CurrencySelectionViewModelProtocol {
             filteredCountries = list.filter { $0.country.lowercased().contains(query.lowercased()) }
         }
         onCountriesFiltered?()
+    }
+    
+    func currencySelected(with currency: Currency) {
+        coordinator.returnConverterView(with: currency, isSender: self.isSender)
     }
 }

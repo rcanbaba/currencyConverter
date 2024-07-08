@@ -10,6 +10,8 @@ import UIKit
 protocol Coordinator {
     var navigationController: UINavigationController { get set }
     func start()
+    func returnConverterView(with currency: Currency, isSender: Bool)
+    func presentSelectionView(with currencyList: [Currency], isSender: Bool)
 }
 
 class AppCoordinator: Coordinator {
@@ -20,31 +22,32 @@ class AppCoordinator: Coordinator {
         self.navigationController = navigationController
     }
     
-    func start() { // TODO: heryere coordinator inject edilmeli viewmodele
-        let viewModel = CurrencyViewModel(currencyService: DependencyInjector.shared.provideCurrencyService())
+    func start() {
+        let viewModel = CurrencyViewModel(
+            currencyService: DependencyInjector.shared.provideCurrencyService(),
+            coordinator: DependencyInjector.shared.provideAppCoordinator()
+        )
         let viewController = ConverterViewController(viewModel: viewModel)
         baseController = viewController
-        viewController.delegate = self
         navigationController.pushViewController(viewController, animated: true)
     }
-}
 
-//TODO: i am not sure this 1 to 1 implementation maybe 1 singleton manager hold states
-extension AppCoordinator: ConverterViewControllerDelegate {
-    func currencySelectTapped(currencyList: [Currency], isSender: Bool) {
+    func presentSelectionView(with currencyList: [Currency], isSender: Bool) {
         Logger.info("Coordinator: presentCurrencySelection")
-        let viewModel = CurrencySelectionViewModel(currencies: currencyList, isSender: isSender)
+        let viewModel = CurrencySelectionViewModel(
+            coordinator: DependencyInjector.shared.provideAppCoordinator(),
+            currencies: currencyList,
+            isSender: isSender
+        )
         let viewController = CurrencySelectionViewController(viewModel: viewModel)
         viewController.modalPresentationStyle = .formSheet
-        viewController.delegate = self
         navigationController.present(viewController, animated: true, completion: nil)
     }
-}
 
-extension AppCoordinator: CurrencySelectionViewControllerDelegate {
-    func currencySelected(currency: Currency, isSender: Bool) {
+    func returnConverterView(with currency: Currency, isSender: Bool) {
         Logger.info("Coordinator: currencySelected")
         guard let baseController = baseController as? ConverterViewController else { return }
         baseController.newCurrencySelected(currency: currency, fromSender: isSender)
     }
+
 }
