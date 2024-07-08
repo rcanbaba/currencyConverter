@@ -16,10 +16,6 @@ protocol CurrencyViewModelProtocol {
     var onError2: ((String) -> Void)? { get set }
     var onReceiverAmountError: ((String) -> Void)? { get set }
     
-    var showSenderCurrencySelectionFor: (([Currency]) -> Void)? { get set }
-    
-    var showReceiverCurrencySelectionFor: (([Currency]) -> Void)? { get set }
-    
     var onFetchRequest: (() -> Void)? { get set }
     
     var updateReceiverAmount: ((String) -> Void)? { get set }
@@ -50,6 +46,7 @@ protocol CurrencyViewModelProtocol {
 class CurrencyViewModel: CurrencyViewModelProtocol {
     
     private let currencyService: CurrencyServiceProtocol
+    private let coordinator: Coordinator
     
     var onRatesFetched: ((CurrencyRate) -> Void)?
     var onError: ((Error) -> Void)?
@@ -67,17 +64,15 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     var updateReceiverCurrencyText: ((String) -> Void)?
     var updateReceiverCurrencyImage: ((UIImage?) -> Void)?
     
-    var showSenderCurrencySelectionFor: (([Currency]) -> Void)?
-    var showReceiverCurrencySelectionFor: (([Currency]) -> Void)?
-    
     private var senderCurrency: Currency = .PLN
     private var receiverCurrency: Currency = .UAH
     private var senderAmount: String = "300.000"
     private var receiverAmount: String = ""
     private var rate: Double = .zero
     
-    init(currencyService: CurrencyServiceProtocol) {
+    init(currencyService: CurrencyServiceProtocol, coordinator: Coordinator) {
         self.currencyService = currencyService
+        self.coordinator = coordinator
     }
     
     func fetchRates(fromCurrency: Currency, toCurrency: Currency, amount: Double, isSender: Bool) {
@@ -163,7 +158,7 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         // en sağda 1 virgül kaldıysa trimle
         senderAmount = text ?? ""
         guard let amount = senderAmount.toDouble() else {
-            Logger.warning("senderAmountUpdated conversion Error, \(text)")
+            Logger.warning("senderAmountUpdated conversion Error, \(text ?? "null")")
             currencyService.cancelFetchRates()
             self.updateReceiverAmount?("")
             return
@@ -181,7 +176,7 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     func receiverAmountUpdated(_ text: String?) {
         receiverAmount = text ?? ""
         guard let amount = receiverAmount.toDouble() else {
-            Logger.warning("receiverAmountUpdated conversion Error, \(text)")
+            Logger.warning("receiverAmountUpdated conversion Error, \(text ?? "null")")
             currencyService.cancelFetchRates()
             self.updateSenderAmount?("")
             return
@@ -191,12 +186,12 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     
     func changeSenderCurrencyTapped() {
         let currencyList = getSelectableCurrencies(hiddenCurrency: receiverCurrency)
-        showSenderCurrencySelectionFor?(currencyList)
+        coordinator.presentSelectionView(with: currencyList, isSender: true)
     }
     
     func changeReceiverCurrencyTapped() {
         let currencyList = getSelectableCurrencies(hiddenCurrency: senderCurrency)
-        showReceiverCurrencySelectionFor?(currencyList)
+        coordinator.presentSelectionView(with: currencyList, isSender: false)
     }
     
     func getSelectableCurrencies(hiddenCurrency: Currency) -> [Currency] {

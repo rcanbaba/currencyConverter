@@ -7,13 +7,7 @@
 
 import UIKit
 
-protocol ConverterViewControllerDelegate: AnyObject {
-    func currencySelectTapped(currencyList: [Currency], isSender: Bool)
-}
-
 class ConverterViewController: UIViewController {
-    
-    weak var delegate: ConverterViewControllerDelegate?
     
     private var viewModel: CurrencyViewModelProtocol
     
@@ -39,8 +33,6 @@ class ConverterViewController: UIViewController {
 
         setupUI()
         configureUI()
-        
-        viewModel = CurrencyViewModel(currencyService: CurrencyService())
         bindViewModel()
         
         viewModel.setDefaultValues()
@@ -126,20 +118,6 @@ class ConverterViewController: UIViewController {
             }
         }
         
-        viewModel.showSenderCurrencySelectionFor = { [weak self] list in
-            DispatchQueue.main.async {
-                self?.delegate?.currencySelectTapped(currencyList: list, isSender: true)
-            }
-        }
-        
-        
-        viewModel.showReceiverCurrencySelectionFor = { [weak self] list in
-            DispatchQueue.main.async {
-                self?.delegate?.currencySelectTapped(currencyList: list, isSender: false)
-            }
-        }
-        
-        
         viewModel.updateSenderCurrencyText = { [weak self] text in
             DispatchQueue.main.async {
                 self?.currencyConvertView.setSender(currencyCode: text)
@@ -174,12 +152,12 @@ class ConverterViewController: UIViewController {
 
 extension ConverterViewController: CurrencyConvertViewDelegate {
     func senderTextfieldValueChanged(_ textField: UITextField) {
-        Logger.info("SENDER \(textField.text)")
+        Logger.info("SENDER \(textField.text ?? "null")")
         viewModel.senderAmountUpdated(textField.text)
     }
     
     func receiverTextfieldValueChanged(_ textField: UITextField) {
-        Logger.info("RECEIVER \(textField.text)")
+        Logger.info("RECEIVER \(textField.text ?? "null")")
         viewModel.receiverAmountUpdated(textField.text)
     }
     
