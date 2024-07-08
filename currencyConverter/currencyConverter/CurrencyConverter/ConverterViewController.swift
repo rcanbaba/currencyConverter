@@ -42,6 +42,8 @@ class ConverterViewController: UIViewController {
         
         viewModel = CurrencyViewModel(currencyService: CurrencyService())
         bindViewModel()
+        
+        viewModel.setDefaultValues()
 
     }
     
@@ -63,25 +65,17 @@ class ConverterViewController: UIViewController {
     }
     
     private func configureUI() {
-        
-        currencyConvertView.setSender(currencyCode: "PLN")
         currencyConvertView.setSender(borderColor: .Custom.Converter.Error.borderColor, borderWidth: 2.0)
         currencyConvertView.setSender(inputColor: .Custom.Converter.Amount.redText)
         currencyConvertView.setSender(titleText: "Sending from")
         currencyConvertView.setSender(backgroundColor: .Custom.Converter.Sender.backgroundColor)
-        currencyConvertView.setSender(flagImage: UIImage(named: "pln-flag-icon"))
         
-        currencyConvertView.setReceiver(currencyCode: "UAH")
         currencyConvertView.setReceiver(borderColor: UIColor.clear, borderWidth: 0.0)
         currencyConvertView.setReceiver(inputColor: .Custom.Converter.Amount.blackText)
         currencyConvertView.setReceiver(titleText: "Receiver gets")
         currencyConvertView.setReceiver(backgroundColor: .Custom.Converter.Receiver.backgroundColor)
-        currencyConvertView.setReceiver(flagImage: UIImage(named: "uah-flag-icon"))
-        
-        currencyConvertView.setRate(text: "1 PLN = 7.2323 UAH")
         
         errorView.isHidden = true
-        
     }
     
     private func bindViewModel() {

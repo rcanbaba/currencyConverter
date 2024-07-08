@@ -41,6 +41,7 @@ protocol CurrencyViewModelProtocol {
     func changeReceiverCurrencyTapped()
     func changeSenderCurrency(_ currency: Currency)
     func changeReceiverCurrency(_ currency: Currency)
+    func setDefaultValues()
 }
 
 
@@ -242,6 +243,22 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         return new == old
     }
     
+    // it is initial set from task
+    func setDefaultValues() {
+        senderCurrency = .PLN
+        receiverCurrency = .UAH
+        senderAmount = "300"
+        receiverAmount = ""
+        
+        updateSenderAmount?(senderAmount)
+        updateSenderCurrencyText?(senderCurrency.rawValue)
+        updateSenderCurrencyImage?(UIImage(named: senderCurrency.currencyFlagImageName))
+        updateReceiverCurrencyText?(receiverCurrency.rawValue)
+        updateReceiverCurrencyImage?(UIImage(named: receiverCurrency.currencyFlagImageName))
+        
+        let amount = senderAmount.toDouble() ?? 300
+        fetchRates(fromCurrency: senderCurrency, toCurrency: receiverCurrency, amount: amount, isSender: true)
+    }
     
 }
 
