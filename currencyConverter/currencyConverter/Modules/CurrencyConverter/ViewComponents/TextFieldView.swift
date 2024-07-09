@@ -20,7 +20,7 @@ class TextFieldView: UIView {
         let textField = UITextField()
         textField.borderStyle = .none
         textField.keyboardType = .decimalPad
-        textField.font = UIFont.systemFont(ofSize: 32)
+        textField.font = UIFont.customFont(.interBold, size: 32)
         textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         textField.setContentHuggingPriority(.defaultLow, for: .horizontal)
         textField.backgroundColor = .clear
@@ -33,21 +33,13 @@ class TextFieldView: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.customFont(.interRegular, size: 14)
         label.textColor = UIColor.Custom.Converter.Receiver.titleTextColor
         label.numberOfLines = 1
         label.textAlignment = .left
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.setContentHuggingPriority(.required, for: .horizontal)
         return label
-    }()
-    
-    // I need it because in stackView setContentCompressionResistancePriority, setContentHuggingPriority not working well
-    private lazy var wrapperView: UIView = {
-        let view = UIView()
-        view.setContentCompressionResistancePriority(.required, for: .horizontal)
-        view.setContentHuggingPriority(.required, for: .horizontal)
-        return view
     }()
     
     private lazy var leftStackView: UIStackView = {

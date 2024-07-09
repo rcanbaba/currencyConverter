@@ -25,18 +25,17 @@ class CurrencyTableViewCell: UITableViewCell {
 
     private lazy var countryLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.font = UIFont.customFont(.interBold, size: 14)
         label.textColor = UIColor.black
         return label
     }()
 
     private lazy var detailLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont.customFont(.interRegular, size: 14)
         label.textColor = UIColor.Custom.Picker.itemDetailTextColor
         return label
     }()
-    // •
     
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [countryLabel, detailLabel])

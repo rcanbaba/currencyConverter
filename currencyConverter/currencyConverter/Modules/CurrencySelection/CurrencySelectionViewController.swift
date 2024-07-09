@@ -35,7 +35,7 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 24, weight: .medium)
+        label.font = UIFont.customFont(.interBold, size: 24)
         label.textColor = UIColor.Custom.Picker.titleTextColor
         label.textAlignment = .center
         return label
@@ -43,7 +43,7 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
     
     private lazy var tableViewTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.font = UIFont.customFont(.interBold, size: 16)
         label.textColor = UIColor.Custom.Picker.titleTextColor
         label.textAlignment = .left
         label.text = "All countries"
@@ -61,7 +61,7 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
     
     private lazy var searchLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.font = UIFont.customFont(.interRegular, size: 12)
         label.textColor = UIColor.Custom.Picker.SearchBar.textColor
         label.textAlignment = .left
         label.backgroundColor = .white

@@ -12,7 +12,7 @@ class RateView: UIStackView {
     
     private lazy var textLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
+        label.font = UIFont.customFont(.interBold, size: 10)
         label.textColor = UIColor.Custom.Converter.Rate.textColor
         label.numberOfLines = 1
         label.textAlignment = .center

@@ -24,7 +24,7 @@ class CurrencySelectionStackView: UIStackView {
     
     private lazy var currencyCodeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.font = UIFont.customFont(.interBold, size: 14)
         label.textColor = UIColor.Custom.Converter.Receiver.currencyCodeColor
         label.numberOfLines = 1
         label.textAlignment = .left
