@@ -68,7 +68,6 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     }
     
     func fetchRates(fromCurrency: Currency, toCurrency: Currency, amount: Double, isSender: Bool) {
-        
         onFetchRequest?()
         
         Logger.info("from: \(fromCurrency.rawValue) - to: \(toCurrency.rawValue) - amount: \(amount) - isSender: \(isSender)")
@@ -106,6 +105,7 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         }
     }
     
+// MARK: view model helper methods
     func getErrorMessage(for error: Error) -> String {
         if let networkError = error as? NetworkError {
             return networkError.description
@@ -114,7 +114,7 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         }
     }
     
-    private func getRateText(from: String, to: String, rate: String) -> String {
+    func getRateText(from: String, to: String, rate: String) -> String {
         return "1 \(from) = \(rate) \(to)"
     }
     
@@ -140,6 +140,36 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     func sendSenderValidationError(for currency: Currency) {
         let errorPreText = "Maximum sending amount: "
         onReceiverAmountError?(errorPreText + Currency.limitsString[currency]! + " " + currency.rawValue)
+    }
+    
+    func checkCurrencyIsSame(new: Currency, old: Currency) -> Bool {
+        return new == old
+    }
+    
+    func getSelectableCurrencies(hiddenCurrency: Currency) -> [Currency] {
+        return Currency.allCases.filter { $0 != hiddenCurrency }
+    }
+    
+}
+
+//MARK: - Public methods called from ViewController - set
+extension CurrencyViewModel {
+
+    // it is initial set from task
+    func setDefaultValues() {
+        senderCurrency = .PLN
+        receiverCurrency = .UAH
+        senderAmount = "300"
+        receiverAmount = ""
+        
+        updateSenderAmount?(senderAmount)
+        updateSenderCurrencyText?(senderCurrency.rawValue)
+        updateSenderCurrencyImage?(senderCurrency)
+        updateReceiverCurrencyText?(receiverCurrency.rawValue)
+        updateReceiverCurrencyImage?(receiverCurrency)
+        
+        let amount = senderAmount.toDouble() ?? 300
+        fetchRates(fromCurrency: senderCurrency, toCurrency: receiverCurrency, amount: amount, isSender: true)
     }
     
     func senderAmountUpdated(_ text: String?) {
@@ -169,20 +199,6 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
             return
         }
         fetchRates(fromCurrency: receiverCurrency, toCurrency: senderCurrency, amount: amount, isSender: false)
-    }
-    
-    func changeSenderCurrencyTapped() {
-        let currencyList = getSelectableCurrencies(hiddenCurrency: receiverCurrency)
-        coordinator.presentSelectionView(with: currencyList, isSender: true)
-    }
-    
-    func changeReceiverCurrencyTapped() {
-        let currencyList = getSelectableCurrencies(hiddenCurrency: senderCurrency)
-        coordinator.presentSelectionView(with: currencyList, isSender: false)
-    }
-    
-    func getSelectableCurrencies(hiddenCurrency: Currency) -> [Currency] {
-        return Currency.allCases.filter { $0 != hiddenCurrency }
     }
     
     func changeSenderCurrency(_ currency: Currency) {
@@ -221,28 +237,8 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         fetchRates(fromCurrency: receiverCurrency, toCurrency: senderCurrency, amount: amount, isSender: false)
     }
     
-    func checkCurrencyIsSame(new: Currency, old: Currency) -> Bool {
-        return new == old
-    }
-    
-    // it is initial set from task
-    func setDefaultValues() {
-        senderCurrency = .PLN
-        receiverCurrency = .UAH
-        senderAmount = "300"
-        receiverAmount = ""
-        
-        updateSenderAmount?(senderAmount)
-        updateSenderCurrencyText?(senderCurrency.rawValue)
-        updateSenderCurrencyImage?(senderCurrency)
-        updateReceiverCurrencyText?(receiverCurrency.rawValue)
-        updateReceiverCurrencyImage?(receiverCurrency)
-        
-        let amount = senderAmount.toDouble() ?? 300
-        fetchRates(fromCurrency: senderCurrency, toCurrency: receiverCurrency, amount: amount, isSender: true)
-    }
-    
-    // NOTE: this logic i am not sure, always requests from render
+    // NOTE: i am not sure, always requests from render
+    // maybe holding last updated value then swap it then send request from there ??
     func swapCurrency() {
         // swap using tuples
         (senderCurrency, receiverCurrency) = (receiverCurrency, senderCurrency)
@@ -259,9 +255,20 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         senderAmountUpdated(receiverAmount)
     }
     
+    // MARK:  - Coordinator communication
+    func changeSenderCurrencyTapped() {
+        let currencyList = getSelectableCurrencies(hiddenCurrency: receiverCurrency)
+        coordinator.presentSelectionView(with: currencyList, isSender: true)
+    }
+    
+    func changeReceiverCurrencyTapped() {
+        let currencyList = getSelectableCurrencies(hiddenCurrency: senderCurrency)
+        coordinator.presentSelectionView(with: currencyList, isSender: false)
+    }
 }
 
-extension String {
+// MARK: - String extension
+fileprivate extension String {
     func toDouble() -> Double? {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
