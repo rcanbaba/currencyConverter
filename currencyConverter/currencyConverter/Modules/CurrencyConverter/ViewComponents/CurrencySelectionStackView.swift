@@ -19,7 +19,6 @@ class CurrencySelectionStackView: UIStackView {
     private lazy var flagImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "pln-flag-icon")
         return imageView
     }()
     
@@ -29,7 +28,6 @@ class CurrencySelectionStackView: UIStackView {
         label.textColor = UIColor.Custom.Converter.Receiver.currencyCodeColor
         label.numberOfLines = 1
         label.textAlignment = .left
-        label.text = "UAH"
         return label
     }()
     

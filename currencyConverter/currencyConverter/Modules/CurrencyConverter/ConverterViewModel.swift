@@ -10,7 +10,7 @@ import Foundation
 protocol CurrencyViewModelProtocol {
     var onError: ((String) -> Void)? { get set }
     var onError2: ((String) -> Void)? { get set }
-    var onReceiverAmountError: ((String) -> Void)? { get set }
+    var onSenderAmountError: ((String) -> Void)? { get set }
     
     var onFetchRequest: (() -> Void)? { get set }
     
@@ -34,6 +34,7 @@ protocol CurrencyViewModelProtocol {
     func changeReceiverCurrency(_ currency: Currency)
     func setDefaultValues()
     func swapCurrency()
+    func fetchRates(fromCurrency: Currency, toCurrency: Currency, amount: Double, isSender: Bool)
 }
 
 class CurrencyViewModel: CurrencyViewModelProtocol {
@@ -43,7 +44,7 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     
     var onError: ((String) -> Void)?
     var onError2: ((String) -> Void)?
-    var onReceiverAmountError: ((String) -> Void)?
+    var onSenderAmountError: ((String) -> Void)?
     
     var onFetchRequest: (() -> Void)?
     
@@ -139,7 +140,7 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     
     func sendSenderValidationError(for currency: Currency) {
         let errorPreText = "Maximum sending amount: "
-        onReceiverAmountError?(errorPreText + Currency.limitsString[currency]! + " " + currency.rawValue)
+        onSenderAmountError?(errorPreText + Currency.limitsString[currency]! + " " + currency.rawValue)
     }
     
     func checkCurrencyIsSame(new: Currency, old: Currency) -> Bool {
