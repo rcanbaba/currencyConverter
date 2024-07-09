@@ -11,7 +11,7 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
     
     private var viewModel: CurrencySelectionViewModelProtocol
     
-    private lazy var tableView: UITableView = {
+    public lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CurrencyTableViewCell.self, forCellReuseIdentifier: "CurrencyCell")
         tableView.dataSource = self
@@ -24,6 +24,13 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         tableView.separatorInset = .zero
 
         return tableView
+    }()
+    
+    private lazy var handleImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "handle-icon")
+        return imageView
     }()
     
     private lazy var titleLabel: UILabel = {
@@ -70,12 +77,16 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         return imageView
     }()
     
-    private var searchBar: UISearchBar = {
+    public var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
+        searchBar.searchBarStyle = .prominent
+        searchBar.backgroundColor = .white
+        searchBar.barTintColor = .white
+        searchBar.layer.cornerRadius = 9.0
         
         // Access the UITextField inside UISearchBar
         if let searchTextField = searchBar.value(forKey: "searchField") as? UITextField {
-            // Add padding to the left of the text field
+            // Add padding to the left of the text field for magnifier icon
             let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
             searchTextField.leftView = paddingView
             searchTextField.leftViewMode = .always
@@ -107,6 +118,7 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         
         searchBar.delegate = self
         
+        view.addSubview(handleImageView)
         view.addSubview(titleLabel)
         
         view.addSubview(searchBaseView)
@@ -116,8 +128,15 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         view.addSubview(tableViewTitleLabel)
         view.addSubview(tableView)
         
+        handleImageView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(12)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(4)
+            make.width.equalTo(32)
+        }
+        
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.top.equalTo(handleImageView.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(16)
         }
         

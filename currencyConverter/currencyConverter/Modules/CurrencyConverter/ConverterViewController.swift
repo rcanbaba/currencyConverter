@@ -90,7 +90,7 @@ class ConverterViewController: UIViewController {
             }
         }
         
-        viewModel.onReceiverAmountError = { [weak self] errorText in
+        viewModel.onSenderAmountError = { [weak self] errorText in
             Logger.warning("Validaton Error errorText")
             DispatchQueue.main.async {
                 self?.errorView.isHidden = false

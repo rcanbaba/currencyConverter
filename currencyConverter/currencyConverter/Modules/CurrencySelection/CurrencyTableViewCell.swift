@@ -55,6 +55,7 @@ class CurrencyTableViewCell: UITableViewCell {
     }
 
     private func setupUI() {
+        contentView.backgroundColor = UIColor.Custom.Picker.backgroundColor
         
         contentView.addSubview(flagBaseView)
         flagBaseView.addSubview(flagImageView)
