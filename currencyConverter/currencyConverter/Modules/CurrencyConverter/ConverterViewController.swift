@@ -178,7 +178,7 @@ extension ConverterViewController: CurrencyConvertViewDelegate {
     }
     
     func swapButtonTapped() {
-        // TODO: later it will be implemented
         Logger.info("SWAP TAPPED")
+        viewModel.swapCurrency()
     }
 }

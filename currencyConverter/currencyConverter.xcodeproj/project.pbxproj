@@ -170,6 +170,15 @@
 			path = NetworkRequests;
 			sourceTree = "<group>";
 		};
+		B4632E562C3D004A0049691C /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				B4FFE9D82C3ACFC000511534 /* CurrencySelection */,
+				B4D2C2752C3A75DC00266958 /* CurrencyConverter */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
 		B4D2C2302C3A6B7400266958 = {
 			isa = PBXGroup;
 			children = (
@@ -198,8 +207,7 @@
 				B4FFE9D62C3A7D5D00511534 /* DependencyInjector.swift */,
 				B4D2C2732C3A738900266958 /* Logger.swift */,
 				B4632E422C3C4C920049691C /* Network */,
-				B4D2C2752C3A75DC00266958 /* CurrencyConverter */,
-				B4FFE9D82C3ACFC000511534 /* CurrencySelection */,
+				B4632E562C3D004A0049691C /* Modules */,
 				B4632E412C3C4C840049691C /* Extensions */,
 				B4D2C24A2C3A6B7600266958 /* Info.plist */,
 				B4D2C2452C3A6B7600266958 /* Assets.xcassets */,
