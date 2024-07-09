@@ -11,19 +11,19 @@ import UIKit
 class DependencyInjector {
     static let shared = DependencyInjector()
     
-    private var currencyService: CurrencyServiceProtocol
+    private var networkService: NetworkServiceProtocol
     private var appCoordinator: Coordinator
     private var navigationController: UINavigationController
     
     init() {
-        currencyService = CurrencyService()
+        networkService = NetworkService()
         navigationController = UINavigationController()
         appCoordinator = AppCoordinator(navigationController: navigationController)
     }
 
     
-    func provideCurrencyService() -> CurrencyServiceProtocol {
-        return currencyService
+    func provideNetworkService() -> NetworkServiceProtocol {
+        return networkService
     }
     
     func provideAppCoordinator() -> Coordinator {

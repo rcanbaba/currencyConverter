@@ -57,8 +57,9 @@ class ConverterViewController: UIViewController {
     }
     
     private func configureUI() {
-        currencyConvertView.setSender(borderColor: .Custom.Converter.Error.borderColor, borderWidth: 2.0)
-        currencyConvertView.setSender(inputColor: .Custom.Converter.Amount.redText)
+        // TODO: all this data must be taken from view model
+        currencyConvertView.setSender(borderColor: UIColor.clear, borderWidth: 0.0)
+        currencyConvertView.setSender(inputColor: .Custom.Converter.Amount.blackText)
         currencyConvertView.setSender(titleText: "Sending from")
         currencyConvertView.setSender(backgroundColor: .Custom.Converter.Sender.backgroundColor)
         
@@ -78,8 +79,8 @@ class ConverterViewController: UIViewController {
             }
         }
         
-        viewModel.onError = { error in
-            Logger.warning("VM onError")
+        viewModel.onError = { errorText in
+            Logger.warning("-----BURDA  aaaa  VM onError \(errorText)")
         }
         
         viewModel.onError2 = { [weak self] errorMessage in
@@ -94,6 +95,8 @@ class ConverterViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.errorView.isHidden = false
                 self?.errorView.set(errorText: errorText)
+                self?.currencyConvertView.setSender(borderColor: .Custom.Converter.Error.borderColor, borderWidth: 2.0)
+                self?.currencyConvertView.setSender(inputColor: .Custom.Converter.Amount.redText)
             }
         }
         
@@ -101,6 +104,9 @@ class ConverterViewController: UIViewController {
             Logger.warning("VM fetch request start")
             DispatchQueue.main.async {
                 self?.errorView.isHidden = true
+                self?.errorView.set(errorText: "")
+                self?.currencyConvertView.setSender(borderColor: UIColor.clear, borderWidth: 0.0)
+                self?.currencyConvertView.setSender(inputColor: .Custom.Converter.Amount.blueText)
             }
         }
         
@@ -124,9 +130,9 @@ class ConverterViewController: UIViewController {
             }
         }
         
-        viewModel.updateSenderCurrencyImage = { [weak self] image in
+        viewModel.updateSenderCurrencyImage = { [weak self] currency in
             DispatchQueue.main.async {
-                self?.currencyConvertView.setSender(flagImage: image)
+                self?.currencyConvertView.setSender(flagImage: currency.currencyFlagImage)
             }
         }
         
@@ -136,9 +142,9 @@ class ConverterViewController: UIViewController {
             }
         }
         
-        viewModel.updateReceiverCurrencyImage = { [weak self] image in
+        viewModel.updateReceiverCurrencyImage = { [weak self] currency in
             DispatchQueue.main.async {
-                self?.currencyConvertView.setReceiver(flagImage: image)
+                self?.currencyConvertView.setReceiver(flagImage: currency.currencyFlagImage)
             }
         }
     }
