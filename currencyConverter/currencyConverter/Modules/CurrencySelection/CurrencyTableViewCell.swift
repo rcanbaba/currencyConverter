@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class CurrencyTableViewCell: UITableViewCell {
+final class CurrencyTableViewCell: UITableViewCell {
     
     private lazy var flagBaseView: UIView = {
         let view = UIView()

@@ -56,10 +56,6 @@ class BottomErrorView: UIStackView {
         infoImageView.snp.makeConstraints { make in
             make.size.equalTo(16)
         }
-// TODO: later maybe neeed
-//        textLabel.snp.makeConstraints { make in
-//            make.top.bottom.equalToSuperview().inset(8)
-//        }
 
     }
     

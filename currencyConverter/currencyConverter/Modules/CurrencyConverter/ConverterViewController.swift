@@ -7,12 +7,18 @@
 
 import UIKit
 
-class ConverterViewController: UIViewController {
+final class ConverterViewController: UIViewController {
     
     private var viewModel: CurrencyViewModelProtocol
     
     private lazy var currencyConvertView: CurrencyConvertView = {
         var view = CurrencyConvertView()
+        view.delegate = self
+        return view
+    }()
+    
+    private lazy var networkErrorView: NetworkErrorView = {
+        var view = NetworkErrorView()
         view.delegate = self
         return view
     }()
@@ -44,7 +50,7 @@ class ConverterViewController: UIViewController {
         
         view.addSubview(currencyConvertView)
         currencyConvertView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(100)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(48)
             make.leading.trailing.equalToSuperview().inset(20)
         }
         
@@ -53,6 +59,12 @@ class ConverterViewController: UIViewController {
             make.top.equalTo(currencyConvertView.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(32)
+        }
+        
+        view.addSubview(networkErrorView)
+        networkErrorView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview().inset(20)
         }
     }
     
@@ -69,24 +81,24 @@ class ConverterViewController: UIViewController {
         currencyConvertView.setReceiver(backgroundColor: .Custom.Converter.Receiver.backgroundColor)
         
         errorView.isHidden = true
+        networkErrorView.isHidden = true
     }
     
+//MARK: - bindViewModel
     private func bindViewModel() {
-        viewModel.updateRateText = { text in
+        viewModel.updateRateText = { [weak self] text in
             DispatchQueue.main.async {
                 Logger.info("Rate text update")
-                self.currencyConvertView.setRate(text: text)
+                self?.currencyConvertView.setRate(text: text)
             }
         }
         
-        viewModel.onError = { errorText in
-            Logger.warning("-----BURDA  aaaa  VM onError \(errorText)")
-        }
-        
-        viewModel.onError2 = { [weak self] errorMessage in
-            Logger.warning("VM onError2")
+        viewModel.onError = { [weak self] errorDescription, errorTitle in
+            Logger.warning("Network Error errorText: \(errorDescription)")
             DispatchQueue.main.async {
-                self?.errorView.set(errorText: errorMessage)
+                self?.networkErrorView.isHidden = false
+                self?.networkErrorView.set(errorDescriptionText: errorDescription)
+                self?.networkErrorView.set(errorTitleText: errorTitle)
             }
         }
         
@@ -156,6 +168,7 @@ class ConverterViewController: UIViewController {
 
 }
 
+//MARK: - CurrencyConvertViewDelegate
 extension ConverterViewController: CurrencyConvertViewDelegate {
     func senderTextfieldValueChanged(_ textField: UITextField) {
         Logger.info("SENDER \(textField.text ?? "null")")
@@ -180,5 +193,12 @@ extension ConverterViewController: CurrencyConvertViewDelegate {
     func swapButtonTapped() {
         Logger.info("SWAP TAPPED")
         viewModel.swapCurrency()
+    }
+}
+
+//MARK: - NetworkErrorViewDelegate
+extension ConverterViewController: NetworkErrorViewDelegate {
+    func networkErrorViewClose(view: NetworkErrorView) {
+        networkErrorView.isHidden = true
     }
 }

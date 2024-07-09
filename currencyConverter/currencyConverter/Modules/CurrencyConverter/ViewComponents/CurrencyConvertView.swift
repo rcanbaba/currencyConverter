@@ -15,7 +15,7 @@ protocol CurrencyConvertViewDelegate: AnyObject {
     func swapButtonTapped()
 }
 
-class CurrencyConvertView: UIView, UITextFieldDelegate{
+final class CurrencyConvertView: UIView, UITextFieldDelegate{
     
     weak var delegate: CurrencyConvertViewDelegate?
 

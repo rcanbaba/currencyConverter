@@ -8,8 +8,7 @@
 import Foundation
 
 protocol CurrencyViewModelProtocol {
-    var onError: ((String) -> Void)? { get set }
-    var onError2: ((String) -> Void)? { get set }
+    var onError: ((String, String) -> Void)? { get set }
     var onSenderAmountError: ((String) -> Void)? { get set }
     
     var onFetchRequest: (() -> Void)? { get set }
@@ -37,13 +36,12 @@ protocol CurrencyViewModelProtocol {
     func fetchRates(fromCurrency: Currency, toCurrency: Currency, amount: Double, isSender: Bool)
 }
 
-class CurrencyViewModel: CurrencyViewModelProtocol {
+final class CurrencyViewModel: CurrencyViewModelProtocol {
     
     private let networkService: NetworkServiceProtocol
     private let coordinator: Coordinator
     
-    var onError: ((String) -> Void)?
-    var onError2: ((String) -> Void)?
+    var onError: ((String, String) -> Void)?
     var onSenderAmountError: ((String) -> Void)?
     
     var onFetchRequest: (() -> Void)?
@@ -101,7 +99,8 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
                 
             case .failure(let error):
                 let errorMessage = self.getErrorMessage(for: error)
-                self.onError?(errorMessage)
+                let errorMessageTitle = self.getErrorMessageTitle(for: error)
+                self.onError?(errorMessage, errorMessageTitle)
             }
         }
     }
@@ -112,6 +111,14 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
             return networkError.description
         } else {
             return NetworkError.unknownError.description
+        }
+    }
+    
+    func getErrorMessageTitle(for error: Error) -> String {
+        if let networkError = error as? NetworkError {
+            return networkError.title
+        } else {
+            return NetworkError.unknownError.title
         }
     }
     
@@ -212,7 +219,7 @@ extension CurrencyViewModel {
         updateSenderCurrencyImage?(currency)
         
         guard let amount = senderAmount.toDouble() else {
-            Logger.warning("receiverAmountUpdated change conversion Error, \(senderAmount)")
+            Logger.warning("senderAmountUpdated change conversion Error, \(senderAmount)")
             networkService.cancelTask()
             self.updateSenderAmount?("")
             return

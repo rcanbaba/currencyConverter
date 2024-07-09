@@ -7,8 +7,6 @@
 
 import UIKit
 
-//TODO: add fonts on figma
-
 extension UIColor {
     struct Custom {
         struct Converter {
@@ -20,6 +18,7 @@ extension UIColor {
                 static let maxErrorBackgroundColor = UIColor("E5476D").withAlphaComponent(0.1)
                 static let networkErrorTitleColor = UIColor("001A3F")
                 static let networkErrorDescriptionColor = UIColor("6C727A")
+                static let networkErrorBackgroundColor = UIColor("FFFFFF")
                 static let borderColor = UIColor("F8326A")
             }
 
