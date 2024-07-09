@@ -28,6 +28,7 @@ final class ConverterViewController: UIViewController {
     init(viewModel: CurrencyViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        view.accessibilityIdentifier = "ConverterViewController_view"
     }
     
     required init?(coder: NSCoder) {

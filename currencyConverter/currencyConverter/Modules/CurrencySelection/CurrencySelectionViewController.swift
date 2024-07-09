@@ -22,7 +22,8 @@ final class CurrencySelectionViewController: UIViewController, UITableViewDelega
         tableView.backgroundColor = UIColor.clear
         tableView.separatorStyle = .singleLine
         tableView.separatorInset = .zero
-
+        tableView.accessibilityIdentifier = "CurrencySelectionViewController_tableView"
+        
         return tableView
     }()
     
@@ -30,6 +31,7 @@ final class CurrencySelectionViewController: UIViewController, UITableViewDelega
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "handle-icon")
+        imageView.accessibilityIdentifier = "CurrencySelectionViewController_handleImageView"
         return imageView
     }()
     
@@ -38,6 +40,7 @@ final class CurrencySelectionViewController: UIViewController, UITableViewDelega
         label.font = UIFont.customFont(.interBold, size: 24)
         label.textColor = UIColor.Custom.Picker.titleTextColor
         label.textAlignment = .center
+        label.accessibilityIdentifier = "CurrencySelectionViewController_titleLabel"
         return label
     }()
     
@@ -47,6 +50,7 @@ final class CurrencySelectionViewController: UIViewController, UITableViewDelega
         label.textColor = UIColor.Custom.Picker.titleTextColor
         label.textAlignment = .left
         label.text = "All countries"
+        label.accessibilityIdentifier = "CurrencySelectionViewController_tableViewTitleLabel"
         return label
     }()
     
@@ -83,6 +87,7 @@ final class CurrencySelectionViewController: UIViewController, UITableViewDelega
         searchBar.backgroundColor = .white
         searchBar.barTintColor = .white
         searchBar.layer.cornerRadius = 9.0
+        searchBar.accessibilityIdentifier = "CurrencySelectionViewController_searchBar"
         
         // Access the UITextField inside UISearchBar
         if let searchTextField = searchBar.value(forKey: "searchField") as? UITextField {
@@ -92,6 +97,7 @@ final class CurrencySelectionViewController: UIViewController, UITableViewDelega
             searchTextField.leftViewMode = .always
             searchTextField.backgroundColor = UIColor.Custom.Picker.SearchBar.backgroundColor
             searchTextField.textColor = UIColor.Custom.Picker.SearchBar.textColor
+            searchTextField.accessibilityIdentifier = "CurrencySelectionViewController_searchTextField"
         }
         
         return searchBar

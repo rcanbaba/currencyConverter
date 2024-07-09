@@ -38,9 +38,10 @@ class CurrencySelectionStackView: UIStackView {
         return imageView
     }()
     
-    private lazy var retryView: UIControl = {
+    private lazy var tapView: UIControl = {
         let control = UIControl()
         control.addTarget(self, action: #selector(currencySelectionTapped(_:)), for: .touchUpInside)
+        control.accessibilityIdentifier = "CurrencySelectionStackView_tapView"
         return control
     }()
     
@@ -65,8 +66,8 @@ class CurrencySelectionStackView: UIStackView {
         setCustomSpacing(8, after: flagImageView)
         setCustomSpacing(4, after: currencyCodeLabel)
         
-        addSubview(retryView)
-        retryView.snp.makeConstraints { make in
+        addSubview(tapView)
+        tapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         

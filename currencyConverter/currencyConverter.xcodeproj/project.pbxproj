@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B40F8AD02C3DD4E6003C9222 /* CurrencySelectionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40F8ACF2C3DD4E6003C9222 /* CurrencySelectionUITests.swift */; };
 		B4632E452C3C4CC90049691C /* CurrencyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4632E442C3C4CC90049691C /* CurrencyModel.swift */; };
 		B4632E472C3C4EAD0049691C /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4632E462C3C4EAD0049691C /* HttpMethod.swift */; };
 		B4632E492C3C4ED70049691C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4632E482C3C4ED70049691C /* Request.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B40F8ACF2C3DD4E6003C9222 /* CurrencySelectionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionUITests.swift; sourceTree = "<group>"; };
 		B4632E442C3C4CC90049691C /* CurrencyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyModel.swift; sourceTree = "<group>"; };
 		B4632E462C3C4EAD0049691C /* HttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
 		B4632E482C3C4ED70049691C /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				B4D2C25D2C3A6B7600266958 /* currencyConverterUITests.swift */,
+				B40F8ACF2C3DD4E6003C9222 /* CurrencySelectionUITests.swift */,
 				B4D2C25F2C3A6B7600266958 /* currencyConverterUITestsLaunchTests.swift */,
 			);
 			path = currencyConverterUITests;
@@ -510,6 +513,7 @@
 			files = (
 				B4D2C2602C3A6B7600266958 /* currencyConverterUITestsLaunchTests.swift in Sources */,
 				B4D2C25E2C3A6B7600266958 /* currencyConverterUITests.swift in Sources */,
+				B40F8AD02C3DD4E6003C9222 /* CurrencySelectionUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
