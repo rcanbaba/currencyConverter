@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+final class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     private var viewModel: CurrencySelectionViewModelProtocol
     

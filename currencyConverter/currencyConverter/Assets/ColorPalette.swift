@@ -7,8 +7,6 @@
 
 import UIKit
 
-//TODO: add fonts on figma
-
 extension UIColor {
     struct Custom {
         struct Converter {

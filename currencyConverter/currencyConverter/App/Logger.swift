@@ -7,6 +7,7 @@
 
 import Foundation
 
+//  it is just working on debug mode just for development purpose
 class Logger {
     enum MessageType {
         case info

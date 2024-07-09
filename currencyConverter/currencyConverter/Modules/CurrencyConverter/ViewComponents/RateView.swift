@@ -30,7 +30,7 @@ class RateView: UIStackView {
     }
     
     private func setupView() {
-        // TODO: we can take them from a fileprivate uiconstant struct
+        // TODO: we could take them from a fileprivate uiconstant struct, all ui constraints-size etc
         backgroundColor = UIColor.Custom.Converter.Rate.backgroundColor
         layer.cornerRadius = 9.0
         

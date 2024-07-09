@@ -37,7 +37,7 @@ protocol CurrencyViewModelProtocol {
     func fetchRates(fromCurrency: Currency, toCurrency: Currency, amount: Double, isSender: Bool)
 }
 
-class CurrencyViewModel: CurrencyViewModelProtocol {
+final class CurrencyViewModel: CurrencyViewModelProtocol {
     
     private let networkService: NetworkServiceProtocol
     private let coordinator: Coordinator

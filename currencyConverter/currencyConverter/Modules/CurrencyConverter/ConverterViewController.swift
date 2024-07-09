@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ConverterViewController: UIViewController {
+final class ConverterViewController: UIViewController {
     
     private var viewModel: CurrencyViewModelProtocol
     

@@ -9,11 +9,11 @@ import Foundation
 
 protocol NetworkServiceProtocol {
     func execute<T: Decodable>(_ request: Request, completion: @escaping (Result<T, Error>) -> Void)
-    func cancelTask() // TODO: hold task identifier
+    func cancelTask() // TODO: hold task identifier, now we do not know which task cancelled, if we send more api requests later
 }
 
 class NetworkService: NetworkServiceProtocol {
-    private var dataTask: URLSessionDataTask? // TODO: hold task identifier
+    private var dataTask: URLSessionDataTask?
     
     func execute<T: Decodable>(_ request: Request, completion: @escaping (Result<T, Error>) -> Void) {
         let urlString = APIConfig.baseURLString + request.path

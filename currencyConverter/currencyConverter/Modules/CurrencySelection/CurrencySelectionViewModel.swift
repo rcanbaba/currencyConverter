@@ -7,14 +7,6 @@
 
 import Foundation
 
-// TODO: new class
-struct CurrencyListItem {
-    let name: String
-    let country: String
-    let code: String
-    let flag: String
-}
-
 protocol CurrencySelectionViewModelProtocol {
     var list: [CurrencyListItem] { get }
     var filteredCountries: [CurrencyListItem] { get }
@@ -25,7 +17,7 @@ protocol CurrencySelectionViewModelProtocol {
     func currencySelected(with currency: Currency)
 }
 
-class CurrencySelectionViewModel: CurrencySelectionViewModelProtocol {
+final class CurrencySelectionViewModel: CurrencySelectionViewModelProtocol {
     
     private let coordinator: Coordinator
     var list: [CurrencyListItem] = []
