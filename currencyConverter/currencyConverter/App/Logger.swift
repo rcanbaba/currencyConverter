@@ -14,8 +14,6 @@ class Logger {
         case warning
     }
     
-    private init() {}
-    
     private static func print(_ message: String, type: MessageType = .info) {
         #if DEBUG
         let prefix: String

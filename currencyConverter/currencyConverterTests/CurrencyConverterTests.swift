@@ -71,8 +71,9 @@ final class CurrencyConverterTests: XCTestCase {
         
         mockService.mockResult = .failure(NetworkError.networkRequestFailed)
         
-        converterViewModel.onError = { errorMessage in
-            XCTAssertEqual(errorMessage, NetworkError.networkRequestFailed.description)
+        converterViewModel.onError = { errorDescription, errorTitle in
+            XCTAssertEqual(errorDescription, NetworkError.networkRequestFailed.description)
+            XCTAssertEqual(errorTitle, NetworkError.networkRequestFailed.title)
             expectation.fulfill()
         }
         
@@ -127,10 +128,10 @@ final class CurrencyConverterTests: XCTestCase {
         converterViewModel.setDefaultValues()
         
         converterViewModel.updateSenderCurrencyText = { currencyText in
-            XCTAssertEqual(currencyText, "EUR")
+            XCTAssertEqual(currencyText, "GBP")
         }
         
-        converterViewModel.changeSenderCurrency(.EUR)
+        converterViewModel.changeSenderCurrency(.GBP)
     }
     
     func testChangeReceiverCurrency() {
@@ -262,8 +263,11 @@ final class CurrencyConverterTests: XCTestCase {
         let viewModel = CurrencyViewModel(networkService: mockService, coordinator: mockCoordinator)
         let unknownError = NSError(domain: "", code: -1, userInfo: nil)
         let errorMessage = viewModel.getErrorMessage(for: unknownError)
+        let errorMessageTitle = viewModel.getErrorMessageTitle(for: unknownError)
         
         XCTAssertEqual(errorMessage, NetworkError.unknownError.description, "The error message should be for unknown error.")
+        XCTAssertEqual(errorMessageTitle, NetworkError.unknownError.title, "The error message title should be for unknown error.")
     }
+    
 }
 
