@@ -19,7 +19,7 @@ class BottomErrorView: UIStackView {
     
     private lazy var textLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.font = UIFont.customFont(.interRegular, size: 12)
         label.textColor = UIColor.Custom.Converter.Error.maxErrorTextColor
         label.numberOfLines = 0
         label.textAlignment = .left
