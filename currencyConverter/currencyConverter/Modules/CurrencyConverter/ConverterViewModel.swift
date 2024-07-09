@@ -33,6 +33,7 @@ protocol CurrencyViewModelProtocol {
     func changeSenderCurrency(_ currency: Currency)
     func changeReceiverCurrency(_ currency: Currency)
     func setDefaultValues()
+    func swapCurrency()
 }
 
 class CurrencyViewModel: CurrencyViewModelProtocol {
@@ -57,7 +58,7 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
     
     private var senderCurrency: Currency = .PLN
     private var receiverCurrency: Currency = .UAH
-    private var senderAmount: String = "300.000"
+    private var senderAmount: String = "300"
     private var receiverAmount: String = ""
     private var rate: Double = .zero
     
@@ -239,6 +240,23 @@ class CurrencyViewModel: CurrencyViewModelProtocol {
         
         let amount = senderAmount.toDouble() ?? 300
         fetchRates(fromCurrency: senderCurrency, toCurrency: receiverCurrency, amount: amount, isSender: true)
+    }
+    
+    // NOTE: this logic i am not sure, always requests from render
+    func swapCurrency() {
+        // swap using tuples
+        (senderCurrency, receiverCurrency) = (receiverCurrency, senderCurrency)
+        
+        
+        updateSenderCurrencyText?(senderCurrency.rawValue)
+        updateSenderCurrencyImage?(senderCurrency)
+        updateReceiverCurrencyText?(receiverCurrency.rawValue)
+        updateReceiverCurrencyImage?(receiverCurrency)
+
+        updateSenderAmount?(receiverAmount)
+        
+        // send new request from sender !!
+        senderAmountUpdated(receiverAmount)
     }
     
 }
