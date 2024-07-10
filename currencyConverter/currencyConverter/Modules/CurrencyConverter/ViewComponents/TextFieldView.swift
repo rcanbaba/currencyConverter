@@ -28,6 +28,7 @@ class TextFieldView: UIView {
         textField.adjustsFontSizeToFitWidth = true
         textField.minimumFontSize = 16
         textField.textAlignment = .right
+        textField.accessibilityIdentifier = "TextFieldView_textField"
         return textField
     }()
     
@@ -57,6 +58,7 @@ class TextFieldView: UIView {
         stackView.setContentCompressionResistancePriority(.required, for: .horizontal)
         stackView.setContentHuggingPriority(.required, for: .horizontal)
         stackView.delegate = self
+        stackView.accessibilityIdentifier = "TextFieldView_currencySelectionStackView"
         return stackView
     }()
     

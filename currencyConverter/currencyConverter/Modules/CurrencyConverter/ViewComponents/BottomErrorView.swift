@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class BottomErrorView: UIStackView {
+class BottomErrorView: UIView {
     
     private lazy var infoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -23,6 +23,7 @@ class BottomErrorView: UIStackView {
         label.textColor = UIColor.Custom.Converter.Error.maxErrorTextColor
         label.numberOfLines = 0
         label.textAlignment = .left
+        label.accessibilityIdentifier = "BottomErrorView_textLabel"
         return label
     }()
     
@@ -39,12 +40,13 @@ class BottomErrorView: UIStackView {
         setupView()
     }
     
-    required init(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
     }
     
     private func setupView() {
+        self.accessibilityIdentifier = "BottomErrorView_view"
         layer.cornerRadius = 8.0
         backgroundColor = UIColor.Custom.Converter.Error.maxErrorBackgroundColor
         

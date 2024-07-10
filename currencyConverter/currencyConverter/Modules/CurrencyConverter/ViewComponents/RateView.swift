@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class RateView: UIStackView {
+class RateView: UIView {
     
     private lazy var textLabel: UILabel = {
         let label = UILabel()
@@ -24,12 +24,13 @@ class RateView: UIStackView {
         setupView()
     }
     
-    required init(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
     }
     
     private func setupView() {
+        self.accessibilityIdentifier = "RateView_view"
         // TODO: we could take them from a fileprivate uiconstant struct, all ui constraints-size etc
         backgroundColor = UIColor.Custom.Converter.Rate.backgroundColor
         layer.cornerRadius = 9.0

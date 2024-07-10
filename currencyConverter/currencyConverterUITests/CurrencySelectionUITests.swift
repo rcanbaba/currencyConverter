@@ -44,10 +44,7 @@ final class CurrencySelectionUITests: XCTestCase {
         XCTAssertTrue(tableView.exists, "Table view should exist")
         
         let handleImageView = app.images["CurrencySelectionViewController_handleImageView"]
-        XCTAssertTrue(tableView.exists, "image view should exist")
-        
-        let tableViewTitleLabel = app.images["CurrencySelectionViewController_tableViewTitleLabel"]
-        XCTAssertTrue(tableView.exists, "label should exist")
+        XCTAssertTrue(handleImageView.exists, "image view should exist")
     }
     
     func testCurrencySelectionFilter() {
@@ -76,7 +73,7 @@ final class CurrencySelectionUITests: XCTestCase {
         XCTAssertTrue(filteredCell.exists, "Filtered cell should exist")
         
         let filteredCell2 = tableView.cells.staticTexts["Great Britain"]
-        XCTAssertTrue(filteredCell.exists, "Filtered cell should exist")
+        XCTAssertTrue(filteredCell2.exists, "Filtered cell should exist")
     }
     
     func testCurrencySelection_cellDidSelect() {
