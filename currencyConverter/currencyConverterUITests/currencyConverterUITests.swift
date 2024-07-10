@@ -8,34 +8,60 @@
 import XCTest
 
 final class currencyConverterUITests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
+    
+    var app: XCUIApplication!
+    
+    override func setUp() {
+        super.setUp()
+        
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
+        
+        app = XCUIApplication()
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+    
+    override func tearDown() {
+        app = nil
+        super.tearDown()
     }
+    
+    func testInitialUIElementsExist() {
+        let senderTextFieldCustomView = app.otherElements["CurrencyConvertView_senderTextFieldView"]
+        XCTAssertTrue(senderTextFieldCustomView.exists, "Sending amount text field should exist")
+        
+        let receiverTextFieldCustomView = app.otherElements["CurrencyConvertView_receiverTextFieldView"]
+        XCTAssertTrue(receiverTextFieldCustomView.exists, "Receiver amount text field should exist")
+        
+        let swapButton = app.buttons["CurrencyConvertView_swapButton"]
+        XCTAssertTrue(swapButton.exists, "Swap button should exist")
+        
+        let rateView = app.otherElements["RateView_view"]
+        XCTAssertTrue(rateView.exists, "Rate view should exist")
+        
+        let senderTitle = app.staticTexts["Sending from"]
+        XCTAssertTrue(senderTitle.exists, "senderTitle label should exist")
+        
+        let receiverTitle = app.staticTexts["Receiver gets"]
+        XCTAssertTrue(receiverTitle.exists, "receiverTitle label should exist")
+        
+        let errorView = app.otherElements["BottomErrorView_view"]
+        XCTAssertFalse(errorView.exists, "Error view should be hidden initially")
+        
+        let networkErrorView = app.otherElements["NetworkErrorView_view"]
+        XCTAssertFalse(networkErrorView.exists, "Network error view should be hidden initially")
+    }
+    
+    
+    func testMaxAmountErrorDisplayed() {
+        let senderTextFieldCustomView = app.otherElements["CurrencyConvertView_senderTextFieldView"]
+        
+        let textfield = senderTextFieldCustomView.textFields["TextFieldView_textField"]
+        textfield.tap()
+        textfield.typeText("280000")
+        
+        let errorView = app.otherElements["BottomErrorView_view"]
+        XCTAssertTrue(errorView.exists, "Error view should be displayed for a large sending amount")
+    }
+    
+    // TODO: generate more ui scenarios
 }

@@ -25,6 +25,7 @@ final class CurrencyConvertView: UIView, UITextFieldDelegate{
         view.delegate = self
         view.set(backgroundColor: .white)
         view.textField.delegate = self
+        view.accessibilityIdentifier = "CurrencyConvertView_senderTextFieldView"
         return view
     }()
     
@@ -34,6 +35,7 @@ final class CurrencyConvertView: UIView, UITextFieldDelegate{
         view.delegate = self
         view.set(backgroundColor: .clear)
         view.textField.delegate = self
+        view.accessibilityIdentifier = "CurrencyConvertView_receiverTextFieldView"
         return view
     }()
     
@@ -50,6 +52,7 @@ final class CurrencyConvertView: UIView, UITextFieldDelegate{
         button.addTarget(self, action: #selector(swapButtonTapped(_:)), for: .touchUpInside)
         button.setImage(UIImage(named: "swap-icon")?.withRenderingMode(.alwaysOriginal), for: .normal)
         button.layer.cornerRadius = 12
+        button.accessibilityIdentifier = "CurrencyConvertView_swapButton"
         return button
     }()
     

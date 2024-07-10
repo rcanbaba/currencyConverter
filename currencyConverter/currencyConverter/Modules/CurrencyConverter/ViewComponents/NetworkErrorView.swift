@@ -61,6 +61,7 @@ class NetworkErrorView: UIStackView {
     }
     
     private func setupView() {
+        self.accessibilityIdentifier = "NetworkErrorView_view"
         layer.cornerRadius = 8.0
         layer.shadowColor = UIColor.gray.cgColor
         layer.shadowOpacity = 0.16
