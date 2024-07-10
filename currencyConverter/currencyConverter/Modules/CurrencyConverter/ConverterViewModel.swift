@@ -245,12 +245,11 @@ extension CurrencyViewModel {
         fetchRates(fromCurrency: receiverCurrency, toCurrency: senderCurrency, amount: amount, isSender: false)
     }
     
-    // NOTE: i am not sure, always requests from render
+    // NOTE: i am not sure, always requests from sender
     // maybe holding last updated value then swap it then send request from there ??
     func swapCurrency() {
         // swap using tuples
         (senderCurrency, receiverCurrency) = (receiverCurrency, senderCurrency)
-        
         
         updateSenderCurrencyText?(senderCurrency.rawValue)
         updateSenderCurrencyImage?(senderCurrency)
@@ -263,7 +262,7 @@ extension CurrencyViewModel {
         senderAmountUpdated(receiverAmount)
     }
     
-    // MARK:  - Coordinator communication
+    // MARK: - Coordinator communication
     func changeSenderCurrencyTapped() {
         let currencyList = getSelectableCurrencies(hiddenCurrency: receiverCurrency)
         coordinator.presentSelectionView(with: currencyList, isSender: true)

@@ -11,6 +11,7 @@ final class ConverterViewController: UIViewController {
     
     private var viewModel: CurrencyViewModelProtocol
     
+    // All ui elements could be in another view to better implementation: currencyConvertView, networkErrorView, errorView
     private lazy var currencyConvertView: CurrencyConvertView = {
         var view = CurrencyConvertView()
         view.delegate = self
@@ -39,7 +40,7 @@ final class ConverterViewController: UIViewController {
         super.viewDidLoad()
 
         setupUI()
-        configureUI()
+        configureInitialUI()
         bindViewModel()
         
         viewModel.setDefaultValues()
@@ -69,7 +70,7 @@ final class ConverterViewController: UIViewController {
         }
     }
     
-    private func configureUI() {
+    private func configureInitialUI() {
         // TODO: all this data must be taken from view model
         currencyConvertView.setSender(borderColor: UIColor.clear, borderWidth: 0.0)
         currencyConvertView.setSender(inputColor: .Custom.Converter.Amount.blackText)
